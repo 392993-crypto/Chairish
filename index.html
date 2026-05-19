@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ErgoMatch - Find Your Perfect Chair</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --background-color: #f8fafc;
+            --text-color: #334155;
+            --card-background: #ffffff;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        header {
+            background-color: var(--card-background);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+        }
+
+        .nav-links a.btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            color: #64748b;
+        }
+
+        .cta-buttons a {
+            display: inline-block;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            margin: 0 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .cta-buttons a:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Temporary placeholders to match project requirements */
+        .placeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .placeholder-card {
+            background: var(--card-background);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">🪑 ErgoMatch</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="signup.html">Sign Up</a>
+                <a href="register.html" class="btn">Register Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>Find Your Perfect Seating Match</h1>
+            <p>Don't let back pain dictate your productivity. Tell us your habits, and let our AI cross-reference top ergonomic chairs to find your perfect fit.</p>
+            <div class="cta-buttons">
+                <a href="register.html" class="btn-primary">Create an Account</a>
+                <a href="signup.html" class="btn-secondary">Sign Up Flow</a>
+            </div>
+        </section>
+
+        <section id="featured-categories">
+            <h2 class="section-title">Featured Categories</h2>
+            <div class="placeholder-grid">
+                <div class="placeholder-card"><h3>Executive Chairs</h3><p>High-end support for long hours.</p></div>
+                <div class="placeholder-card"><h3>Task Chairs</h3><p>Flexible setups for dynamic workspaces.</p></div>
+                <div class="placeholder-card"><h3>Saddle Stools</h3><p>Active sitting options for posture health.</p></div>
+            </div>
+        </section>
+
+        <section id="chair-feed">
+            <h2 class="section-title">Latest Ergonomic Discoveries</h2>
+            <div class="placeholder-grid">
+                <div class="placeholder-card"><h3>Aeron Classic</h3><p>The mesh gold standard.</p></div>
+                <div class="placeholder-card"><h3>Gesture Framework</h3><p>Designed to support shifting postures.</p></div>
+                <div class="placeholder-card"><h3>Ergohuman High-Back</h3><p>Aggressive lumbar mapping.</p></div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
