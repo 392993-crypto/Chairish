@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChairApp - Register</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html">Home (Landing)</a>
+        <a href="home.html">Feed</a>
+        <a href="register.html" class="active">Register</a>
+        <a href="profile.html">Profile</a>
+        <a href="create.html">Add Chair</a>
+        <a href="admin.html">Admin Dashboard</a>
+        <a href="checkpoints.html">Checkpoints</a>
+    </nav>
+
+    <main class="auth-container">
+        <h2>Create an Account</h2>
+        <p>Join our chair-sharing community and find your perfect ergonomic match!</p>
+
+        <form id="registrationForm" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="e.g., ChairLover99">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="name@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-submit">Register & Log In</button>
+        </form>
+
+        <div id="formFeedback" class="feedback-message"></div>
+    </main>
+
+    <script src="register.js"></script>
+</body>
+</html>
