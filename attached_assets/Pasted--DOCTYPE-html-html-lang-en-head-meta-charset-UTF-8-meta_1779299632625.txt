@@ -128,6 +128,7 @@
             padding-bottom: 0.5rem;
         }
 
+        /* Temporary placeholders to match project requirements */
         .placeholder-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -186,5 +187,5 @@
         </section>
     </main>
 
-</body>
-</html>
+    </body>
+    </html>
