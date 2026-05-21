@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | ChairSpotter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+  <div class="nav-left">
+    <a href="home.html" class="nav-link">Home</a>
+    <a href="create.html" class="nav-link">Add Chair</a>
+    <a href="profile.html" class="nav-link">Profile</a>
+    <a href="checkpoints.html" class="nav-link">Checkpoints</a>
+  </div>
+
+  <div class="nav-right">
+    <a href="admin.html" class="nav-link admin-btn">Admin</a>
+  </div>
+</nav>
+
+    <nav class="navbar">
+        <div class="nav-logo">🪑 ChairSpotter</div>
+        <ul class="nav-links">
+            <li><a href="home.html">Home Feed</a></li>
+            <li><a href="create.html">Post a Chair</a></li>
+            <li><a href="profile.html" class="active">Profile</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+            <li><a href="checkpoints.html">Checkpoints</a></li>
+        </ul>
+    </nav>
+
+    <main class="profile-wrapper">
+        <header class="profile-header">
+            <h2>Your Collector & Ergo Profile</h2>
+            <p>These traits let our AI analyze how your body type and taste match any posted chair.</p>
+        </header>
+
+        <section id="profile-view-pane" class="profile-card">
+            <div class="account-details">
+                <h3>Account Credentials</h3>
+                <p><strong>Username:</strong> <span id="view-username">Loading...</span></p>
+                <p><strong>Email Address:</strong> <span id="view-email">Loading...</span></p>
+            </div>
+
+            <hr>
+
+            <div class="traits-details">
+                <h3>9 Ergo & Style Profile Traits</h3>
+                <div class="traits-grid">
+                    <p><strong>1. Height:</strong> <span id="view-height">---</span> cm</p>
+                    <p><strong>2. Daily Sitting Time:</strong> <span id="view-sitting-hours">---</span> hours</p>
+                    <p><strong>3. Sitting Posture:</strong> <span id="view-posture">---</span></p>
+                    <p><strong>4. Primary Desk Setup:</strong> <span id="view-desk-type">---</span></p>
+                    <p><strong>5. Main Chair Usage:</strong> <span id="view-chair-use">---</span></p>
+                    <p><strong>6. Preferred Support:</strong> <span id="view-lumbar-pref">---</span></p>
+                    <p><strong>7. Material Focus:</strong> <span id="view-material">---</span></p>
+                    <p><strong>8. Aesthetic Taste:</strong> <span id="view-aesthetic">---</span></p>
+                    <p><strong>9. Evaluation Priority:</strong> <span id="view-priority">---</span></p>
+                </div>
+            </div>
+
+            <button id="to-edit-mode-btn" class="btn">Edit Profile Fields</button>
+        </section>
+
+        <section id="profile-edit-pane" class="profile-card hidden">
+            <h3>Modify Your Seating Profile</h3>
+            <form id="edit-profile-form">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit-height">1. Physical Height (cm):</label>
+                        <input type="number" id="edit-height" placeholder="e.g. 175" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-sitting-hours">2. Daily Sitting Hours:</label>
+                        <input type="number" id="edit-sitting-hours" min="0" max="24" placeholder="e.g. 6" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-posture">3. Posture Habit:</label>
+                        <select id="edit-posture" required>
+                            <option value="Straight Back / Alert">Straight Back / Alert</option>
+                            <option value="The Casual Sloucher">The Casual Sloucher</option>
+                            <option value="Deep Recliner">Deep Recliner</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-desk-type">4. Primary Desk Setup:</label>
+                        <select id="edit-desk-type" required>
+                            <option value="Standard Fixed Desk">Standard Fixed Desk</option>
+                            <option value="Sit-Stand Adjustable">Sit-Stand Adjustable</option>
+                            <option value="No Desk / Lounge Space">No Desk / Lounge Space</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-chair-use">5. Main Chair Usage:</label>
+                        <select id="edit-chair-use" required>
+                            <option value="Productivity / Coding">Productivity / Coding</option>
+                            <option value="Gaming sessions">Gaming Sessions</option>
+                            <option value="Lounge / Creative Thinking">Lounge / Creative Thinking</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-lumbar-pref">6. Lumbar Support Preference:</label>
+                        <select id="edit-lumbar-pref" required>
+                            <option value="Firm & Pronounced">Firm & Pronounced</option>
+                            <option value="Cushioned / Soft">Cushioned / Soft</option>
+                            <option value="Minimalist / Implicit">Minimalist / Implicit</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-material">7. Preferred Material:</label>
+                        <select id="edit-material" required>
+                            <option value="Breathable Mesh">Breathable Mesh</option>
+                            <option value="Premium Leather">Premium Leather</option>
+                            <option value="Molded Wood / Plastic">Molded Wood / Structural Plastic</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-aesthetic">8. Favorite Chair Aesthetic:</label>
+                        <select id="edit-aesthetic" required>
+                            <option value="Mid-Century Modern">Mid-Century Modern</option>
+                            <option value="Ergonomic Industrial">Ergonomic Industrial</option>
+                            <option value="Minimalist Sci-Fi">Minimalist Sci-Fi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-priority">9. What matters more to you?</label>
+                        <select id="edit-priority" required>
+                            <option value="Pure Ergonomics & Health">Pure Ergonomics & Health</option>
+                            <option value="Visual Style & Impact">Visual Style & Impact</option>
+                            <option value="An Even Balance of Both">An Even Balance of Both</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-save">Save Changes</button>
+                    <button type="button" id="cancel-edit-btn" class="btn btn-cancel">Cancel</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="profile.js"></script>
+</body>
+</html>
