@@ -4,21 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile | ChairSpotter</title>
-    <link rel="stylesheet" href="style.css">
+    <link class="style-ref" rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar">
-  <div class="nav-left">
-    <a href="home.html" class="nav-link">Home</a>
-    <a href="create.html" class="nav-link">Add Chair</a>
-    <a href="profile.html" class="nav-link">Profile</a>
-    <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-  </div>
-
-  <div class="nav-right">
-    <a href="admin.html" class="nav-link admin-btn">Admin</a>
-  </div>
-</nav>
 
     <nav class="navbar">
         <div class="nav-logo">🪑 ChairSpotter</div>
@@ -41,7 +29,6 @@
             <div class="account-details">
                 <h3>Account Credentials</h3>
                 <p><strong>Username:</strong> <span id="view-username">Loading...</span></p>
-                <p><strong>Email Address:</strong> <span id="view-email">Loading...</span></p>
             </div>
 
             <hr>
@@ -81,65 +68,37 @@
 
                     <div class="form-group">
                         <label for="edit-posture">3. Posture Habit:</label>
-                        <select id="edit-posture" required>
-                            <option value="Straight Back / Alert">Straight Back / Alert</option>
-                            <option value="The Casual Sloucher">The Casual Sloucher</option>
-                            <option value="Deep Recliner">Deep Recliner</option>
-                        </select>
+                        <input type="text" id="edit-posture" placeholder="e.g. Goblin Slouch, Pretzel, Spine Royalty" required>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-desk-type">4. Primary Desk Setup:</label>
-                        <select id="edit-desk-type" required>
-                            <option value="Standard Fixed Desk">Standard Fixed Desk</option>
-                            <option value="Sit-Stand Adjustable">Sit-Stand Adjustable</option>
-                            <option value="No Desk / Lounge Space">No Desk / Lounge Space</option>
-                        </select>
+                        <input type="text" id="edit-desk-type" placeholder="e.g. Couch Fortress, Floor, NASA Battlestation" required>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-chair-use">5. Main Chair Usage:</label>
-                        <select id="edit-chair-use" required>
-                            <option value="Productivity / Coding">Productivity / Coding</option>
-                            <option value="Gaming sessions">Gaming Sessions</option>
-                            <option value="Lounge / Creative Thinking">Lounge / Creative Thinking</option>
-                        </select>
+                        <input type="text" id="edit-chair-use" placeholder="e.g. Competitive Coding, Aggressive Spinning, Napping" required>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-lumbar-pref">6. Lumbar Support Preference:</label>
-                        <select id="edit-lumbar-pref" required>
-                            <option value="Firm & Pronounced">Firm & Pronounced</option>
-                            <option value="Cushioned / Soft">Cushioned / Soft</option>
-                            <option value="Minimalist / Implicit">Minimalist / Implicit</option>
-                        </select>
+                        <input type="text" id="edit-lumbar-pref" placeholder="e.g. Aggressive Brick, Soft Cloud, None" required>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-material">7. Preferred Material:</label>
-                        <select id="edit-material" required>
-                            <option value="Breathable Mesh">Breathable Mesh</option>
-                            <option value="Premium Leather">Premium Leather</option>
-                            <option value="Molded Wood / Plastic">Molded Wood / Structural Plastic</option>
-                        </select>
+                        <input type="text" id="edit-material" placeholder="e.g. Haunted Velvet, Vintage Leather, Mesh" required>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-aesthetic">8. Favorite Chair Aesthetic:</label>
-                        <select id="edit-aesthetic" required>
-                            <option value="Mid-Century Modern">Mid-Century Modern</option>
-                            <option value="Ergonomic Industrial">Ergonomic Industrial</option>
-                            <option value="Minimalist Sci-Fi">Minimalist Sci-Fi</option>
-                        </select>
+                        <input type="text" id="edit-aesthetic" placeholder="e.g. 1970s Space Egg, Cyberpunk Overlord" required>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-priority">9. What matters more to you?</label>
-                        <select id="edit-priority" required>
-                            <option value="Pure Ergonomics & Health">Pure Ergonomics & Health</option>
-                            <option value="Visual Style & Impact">Visual Style & Impact</option>
-                            <option value="An Even Balance of Both">An Even Balance of Both</option>
-                        </select>
+                        <input type="text" id="edit-priority" placeholder="e.g. Spinal Survival, Pure Style, Chaos" required>
                     </div>
                 </div>
 
