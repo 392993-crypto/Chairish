@@ -51,7 +51,7 @@
             <button id="to-edit-mode-btn" class="btn">Edit Profile Fields</button>
         </section>
 
-        <section id="profile-edit-pane" class="profile-card hidden">
+        <section id="profile-edit-pane" class="profile-card hidden" style="display: none;">
             <h3>Modify Your Seating Profile</h3>
             <form id="edit-profile-form">
 
@@ -110,6 +110,104 @@
         </section>
     </main>
 
-    <script src="profile.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication session
+            let activeUser = JSON.parse(localStorage.getItem('activeUser'));
+            
+            // Redirect to signin if no session found
+            if (!activeUser) {
+                alert('Please sign in to access your profile.');
+                window.location.href = 'signin.html';
+                return;
+            }
+
+            // UI view nodes
+            const viewPane = document.getElementById('profile-view-pane');
+            const editPane = document.getElementById('profile-edit-pane');
+            
+            const toEditBtn = document.getElementById('to-edit-mode-btn');
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            const editForm = document.getElementById('edit-profile-form');
+
+            // Populate view dashboard and inputs
+            function loadUserData() {
+                document.getElementById('view-username').textContent = activeUser.username || 'N/A';
+                
+                // Displaying the 9 criteria traits
+                document.getElementById('view-height').textContent = activeUser.height || '---';
+                document.getElementById('view-sitting-hours').textContent = activeUser.sittingHours || '---';
+                document.getElementById('view-posture').textContent = activeUser.posture || '---';
+                document.getElementById('view-desk-type').textContent = activeUser.deskType || '---';
+                document.getElementById('view-chair-use').textContent = activeUser.chairUse || '---';
+                document.getElementById('view-lumbar-pref').textContent = activeUser.lumbarPref || '---';
+                document.getElementById('view-material').textContent = activeUser.material || '---';
+                document.getElementById('view-aesthetic').textContent = activeUser.aesthetic || '---';
+                document.getElementById('view-priority').textContent = activeUser.priority || '---';
+
+                // Prefill input boxes
+                document.getElementById('edit-height').value = activeUser.height || '';
+                document.getElementById('edit-sitting-hours').value = activeUser.sittingHours || '';
+                document.getElementById('edit-posture').value = activeUser.posture || '';
+                document.getElementById('edit-desk-type').value = activeUser.deskType || '';
+                document.getElementById('edit-chair-use').value = activeUser.chairUse || '';
+                document.getElementById('edit-lumbar-pref').value = activeUser.lumbarPref || '';
+                document.getElementById('edit-material').value = activeUser.material || '';
+                document.getElementById('edit-aesthetic').value = activeUser.aesthetic || '';
+                document.getElementById('edit-priority').value = activeUser.priority || '';
+            }
+
+            // Initial view load execution
+            loadUserData();
+
+            // Navigation Toggle switches
+            toEditBtn.addEventListener('click', function() {
+                viewPane.style.display = 'none';
+                editPane.style.display = 'block';
+                editPane.classList.remove('hidden');
+            });
+
+            cancelEditBtn.addEventListener('click', function() {
+                editPane.style.display = 'none';
+                editPane.classList.add('hidden');
+                viewPane.style.display = 'block';
+            });
+
+            // Form data submission capture handles syncing records
+            editForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Build modern object mapping data values
+                activeUser.height = document.getElementById('edit-height').value;
+                activeUser.sittingHours = document.getElementById('edit-sitting-hours').value;
+                activeUser.posture = document.getElementById('edit-posture').value;
+                activeUser.deskType = document.getElementById('edit-desk-type').value;
+                activeUser.chairUse = document.getElementById('edit-chair-use').value;
+                activeUser.lumbarPref = document.getElementById('edit-lumbar-pref').value;
+                activeUser.material = document.getElementById('edit-material').value;
+                activeUser.aesthetic = document.getElementById('edit-aesthetic').value;
+                activeUser.priority = document.getElementById('edit-priority').value;
+
+                // 1. Update the Active Login Session
+                localStorage.setItem('activeUser', JSON.stringify(activeUser));
+
+                // 2. Persist tracking changes inside our primary user storage list
+                let globalUsersList = JSON.parse(localStorage.getItem('users')) || [];
+                let modifiedUsersList = globalUsersList.map(user => {
+                    if (user.username === activeUser.username) {
+                        return { ...user, ...activeUser };
+                    }
+                    return user;
+                });
+                localStorage.setItem('users', JSON.stringify(modifiedUsersList));
+
+                // Re-render and swap display view states back to dashboard layout
+                loadUserData();
+                editPane.style.display = 'none';
+                editPane.classList.add('hidden');
+                viewPane.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 </html>
