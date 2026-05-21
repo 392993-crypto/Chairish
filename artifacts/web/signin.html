@@ -4,90 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chairish | Sign In</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <nav>
-            <a href="index.html">🪑 Chairish</a>
-            <div>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">🪑 Chairish</a>
+            <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="signin.html">Sign In</a>
-                <a href="register.html">Register Now</a>
+                <a href="register.html" class="btn">Register Now</a>
             </div>
         </nav>
     </header>
 
-    <main>
+    <main class="auth-container">
         <h2>Sign In</h2>
-        
-        <div id="error-message"></div>
 
-        <form id="login-form">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" required>
-            </div>
-            
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" required>
+        <div id="error-message" class="feedback-message error" style="display:none;"></div>
+
+        <form id="login-form" class="auth-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="e.g., ChairLover99">
             </div>
 
-            <button type="submit">Sign In</button>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="btn-submit">Sign In</button>
         </form>
 
-        <div>
-            <p>Don't have an account? <a href="register.html">Register here</a></p>
-        </div>
+        <p style="text-align:center; margin-top:1rem;">
+            Don't have an account? <a href="register.html">Register here</a>
+        </p>
     </main>
 
     <script>
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const usernameInput = document.getElementById('username').value.trim();
             const passwordInput = document.getElementById('password').value;
             const errorBox = document.getElementById('error-message');
-            
-            errorBox.textContent = ''; // Clear previous error messages
 
-            // 1. Check for Admin Account
+            errorBox.style.display = 'none';
+            errorBox.textContent = '';
+
+            // 1. Admin shortcut
             if (usernameInput === 'admin' && passwordInput === 'admin123') {
-                const adminUser = {
-                    userId: 'admin-000',
-                    username: 'admin',
-                    isAdmin: true
-                };
+                const adminUser = { userId: 'admin-000', username: 'admin', isAdmin: true };
                 localStorage.setItem('activeUser', JSON.stringify(adminUser));
-                window.location.href = 'admin.html'; 
+                localStorage.setItem('currentUser', JSON.stringify(adminUser));
+                window.location.href = 'admin.html';
                 return;
             }
 
-            // 2. Check for regular registered users in localStorage
-            const usersData = localStorage.getItem('users');
-            let authenticatedUser = null;
+            // 2. Look up in the registered users list
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const match = users.find(u => u.username === usernameInput && u.password === passwordInput);
 
-            if (usersData) {
-                const usersList = JSON.parse(usersData);
-                // Look for matching username and password
-                authenticatedUser = usersList.find(u => u.username === usernameInput && u.password === passwordInput);
-            }
-
-            if (authenticatedUser) {
-                // Set active user session state
-                const userSession = {
-                    userId: authenticatedUser.userId,
-                    username: authenticatedUser.username,
-                    isAdmin: false
-                };
-                localStorage.setItem('activeUser', JSON.stringify(userSession));
-                
-                // Redirect to the Home feed
+            if (match) {
+                // Save both the session token and the full user (for profile.js)
+                localStorage.setItem('activeUser', JSON.stringify({
+                    userId: match.userId,
+                    username: match.username,
+                    isAdmin: match.isAdmin || false
+                }));
+                localStorage.setItem('currentUser', JSON.stringify(match));
                 window.location.href = 'home.html';
             } else {
-                // Display error text
                 errorBox.textContent = 'Invalid username or password. Please try again.';
+                errorBox.style.display = 'block';
             }
         });
     </script>
