@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cat_01",
+    "name": "Ergonomic",
+    "description": "Chairs optimized for posture and long hours of sitting.",
+    "isFeatured": true
+  },
+  {
+    "id": "cat_02",
+    "name": "Lounge",
+    "description": "Reclined, cozy seating built purely for relaxation.",
+    "isFeatured": false
+  },
+  {
+    "id": "cat_03",
+    "name": "Dining",
+    "description": "Upright, structural chairs meant for tables and gatherings.",
+    "isFeatured": true
+  },
+  {
+    "id": "cat_04",
+    "name": "Accent",
+    "description": "Eye-catching statement pieces that define a room's aesthetic.",
+    "isFeatured": false
+  },
+  {
+    "id": "cat_05",
+    "name": "Outdoor",
+    "description": "Weatherproof materials designed for patios and yards.",
+    "isFeatured": true
+  }
+]

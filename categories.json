@@ -1,7 +1,0 @@
-[
-  { "id": "cat_01", "title": "Mesh Task Chairs", "type": "Breathable", "isFeatured": true },
-  { "id": "cat_02", "title": "Executive Leather", "type": "Traditional", "isFeatured": false },
-  { "id": "cat_03", "title": "Active Stools", "type": "Ergonomic Balance", "isFeatured": true },
-  { "id": "cat_04", "title": "Saddle Seating", "type": "Posture Direct", "isFeatured": false },
-  { "id": "cat_05", "title": "Gaming Ergonomics", "type": "High Back Support", "isFeatured": false }
-]

@@ -1,12 +1,64 @@
-<nav class="navbar">
-  <div class="nav-left">
-    <a href="home.html" class="nav-link">Home</a>
-    <a href="create.html" class="nav-link">Add Chair</a>
-    <a href="profile.html" class="nav-link">Profile</a>
-    <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chairish - Add Chair</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-  <div class="nav-right">
-    <a href="admin.html" class="nav-link admin-btn">Admin</a>
-  </div>
-</nav>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="home.html" class="nav-link">Home</a>
+      <a href="create.html" class="nav-link">Add Chair</a>
+      <a href="profile.html" class="nav-link">Profile</a>
+      <a href="checkpoints.html" class="nav-link">Checkpoints</a>
+    </div>
+    <div class="nav-right">
+      <a href="admin.html" class="nav-link admin-btn">Admin</a>
+    </div>
+  </nav>
+
+  <section id="create-section" style="max-width: 600px; margin: 2rem auto; padding: 0 1rem;">
+    <h2>Post a New Chair Discovery</h2>
+    <p>Fill out the details below to add a chair to the community feed.</p>
+
+    <form id="add-chair-form">
+      <div style="margin-bottom: 1rem;">
+        <label for="chairName"><strong>Chair Name:</strong></label><br>
+        <input type="text" id="chairName" name="chairName" placeholder="e.g., Eames Lounge Chair" required style="width: 100%; padding: 8px; margin-top: 5px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="chairBrand"><strong>Brand / Manufacturer:</strong></label><br>
+        <input type="text" id="chairBrand" name="chairBrand" placeholder="e.g., Herman Miller" required style="width: 100%; padding: 8px; margin-top: 5px;">
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="chairImage"><strong>Image URL:</strong></label><br>
+        <input type="url" id="chairImage" name="chairImage" placeholder="https://example.com/chair-image.jpg" required style="width: 100%; padding: 8px; margin-top: 5px;">
+        <small style="color: #666;">Paste a web link to an image of the chair.</small>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="chairCategory"><strong>Category:</strong></label><br>
+        <select id="chairCategory" name="chairCategory" required style="width: 100%; padding: 8px; margin-top: 5px;">
+          <option value="" disabled selected>Loading available categories...</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label for="chairDescription"><strong>Description:</strong></label><br>
+        <textarea id="chairDescription" name="chairDescription" rows="4" placeholder="Tell us about its build, comfort, materials..." required style="width: 100%; padding: 8px; margin-top: 5px; font-family: sans-serif;"></textarea>
+      </div>
+
+      <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+        Publish Chair
+      </button>
+    </form>
+  </section>
+
+  <script src="create.js"></script>
+</body>
+</html>
