@@ -6,6 +6,14 @@ const app = express();
 // Hardcoded to 3001 to avoid colliding with Vite
 const PORT = 3001; 
 
+// This acts as the VIP pass (CORS) to let your frontend talk to your backend
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
+
 app.use(express.json());
 app.use(express.static(__dirname));
 

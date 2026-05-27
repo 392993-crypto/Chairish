@@ -45,7 +45,8 @@ async function handleAddChair(event) {
   };
 
   try {
-      const response = await fetch('/api/chairs', {
+      // Updated the URL here to point directly to your backend port!
+      const response = await fetch('http://localhost:3001/api/chairs', {
           method: 'POST', 
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newChair)
