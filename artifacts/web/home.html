@@ -1,39 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chairish - Home</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Feed - ErgoChair Share</title>
 </head>
 <body>
 
-  <nav class="navbar">
-    <div class="nav-left">
-      <a href="home.html" class="nav-link">Home</a>
-      <a href="create.html" class="nav-link">Add Chair</a>
-      <a href="profile.html" class="nav-link">Profile</a>
-      <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-    </div>
-    <div class="nav-right">
-      <a href="admin.html" class="nav-link admin-btn">Admin</a>
-    </div>
-  </nav>
-
-  <section id="featured-categories-section">
-    <h2>Featured Categories</h2>
-    <div id="featured-categories-container">
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="home.html" class="nav-link">Home</a>
+        <a href="create.html" class="nav-link">Add Chair</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="checkpoints.html" class="nav-link">Checkpoints</a>
       </div>
-  </section>
 
-  <hr>
-
-  <section id="feed-section">
-    <h2>Explore Chairs</h2>
-    <div id="chair-grid" class="chair-grid">
+      <div class="nav-right">
+        <a href="admin.html" class="nav-link admin-btn">Admin</a>
       </div>
-  </section>
+    </nav>
 
-  <script src="home.js"></script>
+    <div class="container">
+        <h1>Ergonomic Chairs Feed</h1>
+        <p>Browse community-shared office chairs or click "Add Chair" to post your own.</p>
+        
+        <div id="chairs-feed">Loading feed...</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const feedContainer = document.getElementById('chairs-feed');
+
+            // 1. DATABASE INITIALIZATION: Only fetch the JSON file if localStorage is empty
+            if (!localStorage.getItem('chairs')) {
+                try {
+                    const response = await fetch('chairs.json');
+                    if (response.ok) {
+                        const initialChairs = await response.json();
+                        localStorage.setItem('chairs', JSON.stringify(initialChairs));
+                    }
+                } catch (err) {
+                    console.error("Could not seed initial chairs.json file:", err);
+                }
+            }
+
+            // 2. READ LIVE APP STATE: Always pull from the unified localStorage key
+            const chairs = JSON.parse(localStorage.getItem('chairs')) || [];
+
+            feedContainer.innerHTML = '';
+
+            if (chairs.length === 0) {
+                feedContainer.innerHTML = '<p>No chairs found.</p>';
+                return;
+            }
+
+            // 3. RENDER ALL CHAIRS
+            chairs.forEach(chair => {
+                const chairCard = document.createElement('div');
+                chairCard.className = 'chair-card';
+                
+                chairCard.innerHTML = `
+                    <h2>${chair.name}</h2>
+                    <p>${chair.description ? chair.description.substring(0, 100) + '...' : 'No description provided.'}</p>
+                    <a href="postinfo.html?id=${chair.id}">View Details</a>
+                    <hr>
+                `;
+                
+                feedContainer.appendChild(chairCard);
+            });
+        });
+    </script>
 </body>
 </html>

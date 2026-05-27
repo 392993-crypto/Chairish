@@ -1,18 +1,1 @@
-[
-  {
-    "id": "chair_01",
-    "name": "Aeron Classic",
-    "brand": "Herman Miller",
-    "image": "https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=500&q=80",
-    "userId": "user_01",
-    "tags": ["ergonomic", "mesh", "office", "premium"]
-  },
-  {
-    "id": "chair_02",
-    "name": "Steelcase Gesture",
-    "brand": "Steelcase",
-    "image": "...",
-    "userId": "user_02",
-    "tags": ["ergonomic", "office"]
-  }
-]
+[]

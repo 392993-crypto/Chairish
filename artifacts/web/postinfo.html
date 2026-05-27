@@ -1,12 +1,78 @@
-<nav class="navbar">
-  <div class="nav-left">
-    <a href="home.html" class="nav-link">Home</a>
-    <a href="create.html" class="nav-link">Add Chair</a>
-    <a href="profile.html" class="nav-link">Profile</a>
-    <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chair Detail - ErgoChair Share</title>
+</head>
+<body>
 
-  <div class="nav-right">
-    <a href="admin.html" class="nav-link admin-btn">Admin</a>
-  </div>
-</nav>
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="home.html" class="nav-link">Home</a>
+        <a href="create.html" class="nav-link">Add Chair</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="checkpoints.html" class="nav-link">Checkpoints</a>
+      </div>
+
+      <div class="nav-right">
+        <a href="admin.html" class="nav-link admin-btn">Admin</a>
+      </div>
+    </nav>
+
+    <div class="container">
+        <div id="chair-content">
+            <h1 id="chair-name">Loading chair details...</h1>
+            <p>Uploaded by: <strong id="chair-author">...</strong></p>
+            
+            <h3>Description</h3>
+            <div id="chair-description"></div>
+            
+            <div id="action-buttons"></div>
+        </div>
+        
+        <div id="error-container" style="display: none;">
+            Chair not found. Please return to the Home Feed.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. URL Parsing: Extract the 'id' parameter from the URL query string (?id=XXX)
+            const urlParams = new URLSearchParams(window.location.search);
+            const chairId = urlParams.get('id');
+
+            if (!chairId) {
+                showError();
+                return;
+            }
+
+            // 2. Fetch application data states from localStorage
+            const chairs = JSON.parse(localStorage.getItem('chairs')) || [];
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            // 3. Locate the specific chair matching the parsed ID
+            const activeChair = chairs.find(c => String(c.id) === String(chairId));
+
+            if (!activeChair) {
+                showError();
+                return;
+            }
+
+            // 4. Cross-Referencing: Find the creator's user data using chair's userId
+            const authorUser = users.find(u => String(u.id) === String(activeChair.userId));
+            const authorUsername = authorUser ? authorUser.username : "Unknown User";
+
+            // 5. DOM Injection: Populate layout elements with retrieved data
+            document.getElementById('chair-name').textContent = activeChair.name;
+            document.getElementById('chair-description').textContent = activeChair.description;
+            document.getElementById('chair-author').textContent = authorUsername;
+        });
+
+        function showError() {
+            document.getElementById('chair-content').style.display = 'none';
+            document.getElementById('error-container').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
