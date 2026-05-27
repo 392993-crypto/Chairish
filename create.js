@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
   fetchCategories();
   const form = document.getElementById('add-chair-form');
-  if (form) form.addEventListener('submit', handleAddChair);
+  if(form) form.addEventListener('submit', handleAddChair);
 });
 
 async function fetchCategories() {
   try {
       const response = await fetch('categories.json');
-      if (!response.ok) return;
+      if (!response.ok) return; // Skip if file doesn't exist yet
       const categories = await response.json();
       const categorySelect = document.getElementById('chairCategory');
-
+      if (!categorySelect) return;
+      
       categorySelect.innerHTML = '<option value="" disabled selected>-- Select a Category --</option>';
       categories.forEach(category => {
           const option = document.createElement('option');
@@ -25,12 +26,8 @@ async function fetchCategories() {
 
 async function handleAddChair(event) {
   event.preventDefault(); 
-
-  let activeUser = null;
-  try { 
-      activeUser = JSON.parse(localStorage.getItem('currentUser')); 
-  } catch(e) {}
-
+  let activeUser;
+  try { activeUser = JSON.parse(localStorage.getItem('currentUser')); } catch(e) { activeUser = null; }
   const activeUserId = activeUser ? (activeUser.userId || activeUser.id) : "user_01"; 
 
   const newChair = {
@@ -51,19 +48,13 @@ async function handleAddChair(event) {
           body: JSON.stringify(newChair)
       });
 
-      // If the server rejects it, let's grab the EXACT reason why
-      if (!response.ok) {
-          const serverMessage = await response.text();
-          throw new Error(`Server Error ${response.status}: ${serverMessage}`);
-      }
+      if (!response.ok) throw new Error("Server rejected the save request.");
 
-      alert("Success! Your chair has been synced.");
+      alert("Success! Your chair has been synced to the global community feed.");
       document.getElementById('add-chair-form').reset();
       window.location.href = 'home.html';
-
   } catch (error) {
-      console.error(error);
-      // This will now pop up the exact error message on your screen!
-      alert("Failed to sync: " + error.message);
+      console.error("Failed to write to chairs via server:", error);
+      alert("Error: Could not sync your chair data. Check the console for details.");
   }
 }
