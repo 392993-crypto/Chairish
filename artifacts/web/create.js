@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) form.addEventListener('submit', handleAddChair);
 });
 
-// Configurable backend URL (update this to your deployed backend URL)
-const BACKEND_URL = 'http://localhost:3001';
+// Backend URL for the Replit deployment
+const BACKEND_URL = 'https://1e6d76c9-df65-4677-b1cf-e9216da63fbc-00-18rszk1ts6hey.janeway.replit.dev';
 
 async function fetchCategories() {
   try {
@@ -74,7 +74,7 @@ async function handleAddChair(event) {
       window.location.href = 'home.html';
 
   } catch (error) {
-      console.error(error);
-      alert("Failed to sync: " + error.message);
+    console.error(error);
+    alert("Failed to sync: " + error.message);
   }
 }
