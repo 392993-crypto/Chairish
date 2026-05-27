@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 // Hardcoded to 3001 to avoid colliding with Vite
-const PORT = 3001; 
+const PORT = 3001;
 
 // This acts as the VIP pass (CORS) to let your frontend talk to your backend
 app.use((req, res, next) => {
@@ -18,6 +18,27 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 const CHAIRS_FILE = path.join(__dirname, 'chairs.json');
+const CATEGORIES_FILE = path.join(__dirname, 'categories.json');
+
+// Serve categories.json
+app.get('/categories.json', (req, res) => {
+  fs.readFile(CATEGORIES_FILE, 'utf8', (err, data) => {
+    if (err) {
+      // Fallback: Return default categories if file doesn't exist
+      const defaultCategories = [
+        { id: '1', name: 'Modern' },
+        { id: '2', name: 'Vintage' },
+        { id: '3', name: 'Industrial' }
+      ];
+      return res.json(defaultCategories);
+    }
+    try {
+      res.json(JSON.parse(data));
+    } catch (e) {
+      res.status(500).json({ error: 'Invalid categories file.' });
+    }
+  });
+});
 
 app.get('/api/chairs', (req, res) => {
   fs.readFile(CHAIRS_FILE, 'utf8', (err, data) => {
