@@ -9,21 +9,31 @@ const BACKEND_URL = 'https://your-backend-domain.com:3001';
 
 async function fetchCategories() {
   try {
-      const response = await fetch(`${BACKEND_URL}/categories.json`);
-      if (!response.ok) return;
-      const categories = await response.json();
-      const categorySelect = document.getElementById('chairCategory');
-
-      categorySelect.innerHTML = '<option value="" disabled selected>-- Select a Category --</option>';
-      categories.forEach(category => {
-          const option = document.createElement('option');
-          option.value = category.id || category.name; 
-          option.textContent = category.name; 
-          categorySelect.appendChild(option);
-      });
+    const response = await fetch(`${BACKEND_URL}/categories.json`);
+    if (!response.ok) throw new Error(`Failed to fetch categories: ${response.status}`);
+    const categories = await response.json();
+    populateCategories(categories);
   } catch (error) {
-      console.error('Error populating dropdown:', error);
+    console.error('Error fetching categories:', error);
+    // Fallback: Use a default list if fetch fails
+    const defaultCategories = [
+      { id: '1', name: 'Modern' },
+      { id: '2', name: 'Vintage' },
+      { id: '3', name: 'Industrial' }
+    ];
+    populateCategories(defaultCategories);
   }
+}
+
+function populateCategories(categories) {
+  const categorySelect = document.getElementById('chairCategory');
+  categorySelect.innerHTML = '<option value="" disabled selected>-- Select a Category --</option>';
+  categories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category.id || category.name; 
+    option.textContent = category.name; 
+    categorySelect.appendChild(option);
+  });
 }
 
 async function handleAddChair(event) {
