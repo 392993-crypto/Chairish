@@ -4,9 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) form.addEventListener('submit', handleAddChair);
 });
 
+// Configurable backend URL (replace with your actual backend URL)
+const BACKEND_URL = 'https://your-backend-domain.com:3001'; // Update this to your deployed backend URL
+
 async function fetchCategories() {
   try {
-      const response = await fetch('categories.json');
+      const response = await fetch(`${BACKEND_URL}/categories.json`);
       if (!response.ok) return;
       const categories = await response.json();
       const categorySelect = document.getElementById('chairCategory');
@@ -45,14 +48,12 @@ async function handleAddChair(event) {
   };
 
   try {
-      // Updated the URL here to point directly to your backend port!
-      const response = await fetch('http://localhost:3001/api/chairs', {
+      const response = await fetch(`${BACKEND_URL}/api/chairs`, {
           method: 'POST', 
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newChair)
       });
 
-      // If the server rejects it, let's grab the EXACT reason why
       if (!response.ok) {
           const serverMessage = await response.text();
           throw new Error(`Server Error ${response.status}: ${serverMessage}`);
@@ -64,7 +65,6 @@ async function handleAddChair(event) {
 
   } catch (error) {
       console.error(error);
-      // This will now pop up the exact error message on your screen!
       alert("Failed to sync: " + error.message);
   }
 }
