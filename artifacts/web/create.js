@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) form.addEventListener('submit', handleAddChair);
 });
 
-// Configurable backend URL (replace with your actual backend URL)
-const BACKEND_URL = 'https://your-backend-domain.com:3001';
+// Configurable backend URL (update this to your deployed backend URL)
+const BACKEND_URL = 'http://localhost:3001';
 
 async function fetchCategories() {
   try {
