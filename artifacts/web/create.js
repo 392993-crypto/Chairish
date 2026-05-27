@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Configurable backend URL (replace with your actual backend URL)
-const BACKEND_URL = 'https://your-backend-domain.com:3001'; // Update this to your deployed backend URL
+const BACKEND_URL = 'https://your-backend-domain.com:3001';
 
 async function fetchCategories() {
   try {
