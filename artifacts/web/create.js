@@ -1,80 +1,72 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetchCategories();
-  const form = document.getElementById('add-chair-form');
-  if (form) form.addEventListener('submit', handleAddChair);
+    fetchCategories();
+    const form = document.getElementById('add-chair-form');
+    if (form) form.addEventListener('submit', handleAddChair);
 });
 
-// Backend URL for the Replit deployment
-const BACKEND_URL = 'https://1e6d76c9-df65-4677-b1cf-e9216da63fbc-00-18rszk1ts6hey.janeway.replit.dev';
-
 async function fetchCategories() {
-  try {
-    const response = await fetch(`${BACKEND_URL}/categories.json`);
-    if (!response.ok) throw new Error(`Failed to fetch categories: ${response.status}`);
-    const categories = await response.json();
-    populateCategories(categories);
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    // Fallback: Use a default list if fetch fails
-    const defaultCategories = [
-      { id: '1', name: 'Modern' },
-      { id: '2', name: 'Vintage' },
-      { id: '3', name: 'Industrial' }
-    ];
-    populateCategories(defaultCategories);
-  }
+    try {
+        const response = await fetch('categories.json');
+        if (!response.ok) throw new Error('Failed to fetch categories');
+        const categories = await response.json();
+        populateCategories(categories);
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        populateCategories([
+            { id: 'cat_01', name: 'Ergonomic' },
+            { id: 'cat_02', name: 'Lounge' },
+            { id: 'cat_03', name: 'Dining' },
+            { id: 'cat_04', name: 'Accent' },
+            { id: 'cat_05', name: 'Outdoor' }
+        ]);
+    }
 }
 
 function populateCategories(categories) {
-  const categorySelect = document.getElementById('chairCategory');
-  categorySelect.innerHTML = '<option value="" disabled selected>-- Select a Category --</option>';
-  categories.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category.id || category.name; 
-    option.textContent = category.name; 
-    categorySelect.appendChild(option);
-  });
+    const select = document.getElementById('chairCategory');
+    select.innerHTML = '<option value="" disabled selected>-- Select a Category --</option>';
+    categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat.id || cat.name;
+        opt.textContent = cat.name;
+        select.appendChild(opt);
+    });
 }
 
 async function handleAddChair(event) {
-  event.preventDefault(); 
+    event.preventDefault();
 
-  let activeUser = null;
-  try { 
-      activeUser = JSON.parse(localStorage.getItem('currentUser')); 
-  } catch(e) {}
+    let activeUser = null;
+    try { activeUser = JSON.parse(localStorage.getItem('currentUser')); } catch(e) {}
 
-  const activeUserId = activeUser ? (activeUser.userId || activeUser.id) : "user_01"; 
+    const newChair = {
+        name: document.getElementById('chairName').value,
+        brand: document.getElementById('chairBrand').value,
+        image: document.getElementById('chairImage').value,
+        categoryId: document.getElementById('chairCategory').value,
+        description: document.getElementById('chairDescription').value,
+        userId: activeUser ? (activeUser.id || activeUser.userId) : 'guest',
+        tags: ['user-sub']
+    };
 
-  const newChair = {
-      id: 'chair_' + Date.now(), 
-      name: document.getElementById('chairName').value,
-      brand: document.getElementById('chairBrand').value,
-      image: document.getElementById('chairImage').value,
-      categoryId: document.getElementById('chairCategory').value,
-      description: document.getElementById('chairDescription').value,
-      userId: activeUserId, 
-      tags: ["user-sub"]
-  };
+    try {
+        const response = await fetch('/api/chairs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newChair)
+        });
 
-  try {
-      const response = await fetch(`${BACKEND_URL}/api/chairs`, {
-          method: 'POST', 
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newChair)
-      });
+        if (!response.ok) {
+            const msg = await response.text();
+            throw new Error(`Server error ${response.status}: ${msg}`);
+        }
 
-      if (!response.ok) {
-          const serverMessage = await response.text();
-          throw new Error(`Server Error ${response.status}: ${serverMessage}`);
-      }
+        alert("Chair posted successfully!");
+        document.getElementById('add-chair-form').reset();
+        window.location.href = 'home.html';
 
-      alert("Success! Your chair has been synced.");
-      document.getElementById('add-chair-form').reset();
-      window.location.href = 'home.html';
-
-  } catch (error) {
-    console.error(error);
-    alert("Failed to sync: " + error.message);
-  }
+    } catch (error) {
+        console.error(error);
+        alert("Failed to post chair: " + error.message);
+    }
 }

@@ -8,11 +8,13 @@
         /* Giving the admin page a distinctly different, more analytical look */
         body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
         .container { padding: 30px; max-width: 1000px; margin: 0 auto; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 40px; }
         .admin-table th, .admin-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         .admin-table th { background-color: #343a40; color: white; }
         .admin-table tr:nth-child(even) { background-color: #f8f9fa; }
         .error-box { background-color: #f8d7da; color: #721c24; padding: 20px; border-radius: 5px; border: 1px solid #f5c6cb; margin-top: 5px; }
+        .btn-delete { background-color: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-delete:hover { background-color: #bd2130; }
     </style>
 </head>
 <body>
@@ -39,8 +41,38 @@
 
         <div id="admin-content" style="display: none;">
             <h1>Admin Control Panel</h1>
-            <p>Welcome back, Administrator. Use the interface below to manage application settings and featured collections.</p>
+            <p>Welcome back, Administrator. Use the interface below to manage application settings, accounts, and posts.</p>
             
+            <h2>Manage Accounts</h2>
+            <p>Review registered member profiles and delete user accounts permanently.</p>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Height (cm)</th>
+                        <th>Sitting Hours</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    </tbody>
+            </table>
+
+            <h2>Manage Posts & Chairs</h2>
+            <p>Toggle featured items on the home feed or permanently remove chair listings.</p>
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Chair Name</th>
+                        <th>Posted By</th>
+                        <th>Featured Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="chairs-table-body">
+                    </tbody>
+            </table>
+
             <h2>Manage Categories</h2>
             <p>Check or uncheck a category to update its visibility in the "Featured Categories" section on the Home Page feed.</p>
             
@@ -54,7 +86,7 @@
                     </tr>
                 </thead>
                 <tbody id="categories-table-body">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -63,10 +95,12 @@
         document.addEventListener("DOMContentLoaded", async () => {
             const accessDeniedDiv = document.getElementById('access-denied');
             const adminContentDiv = document.getElementById('admin-content');
-            const tableBody = document.getElementById('categories-table-body');
+            const categoriesTableBody = document.getElementById('categories-table-body');
+            const usersTableBody = document.getElementById('users-table-body');
+            const chairsTableBody = document.getElementById('chairs-table-body');
 
             // 1. ROUTE GUARD: Check if anyone is logged in first
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const currentUser = JSON.parse(localStorage.getItem('currentUser')) || JSON.parse(localStorage.getItem('activeUser'));
             if (!currentUser) {
                 return; // Leave access denied visible
             }
@@ -78,7 +112,6 @@
                     throw new Error("Could not load the authorized admin credentials file.");
                 }
                 
-                // Assuming admins.json is formatted as a simple array: ["alex123", "chair_master_admin"]
                 const adminUsernames = await response.json();
 
                 // If the logged-in user's username is NOT found in the admin file, block them
@@ -108,20 +141,130 @@
                 }
             }
 
-            // 5. RENDER SYSTEM STATE: Pull and display data from the unified localStorage key
+            // 5. RENDER USER ACCOUNTS FROM SERVER
+            async function renderUsers() {
+                try {
+                    const response = await fetch('/api/users');
+                    const users = await response.json();
+                    usersTableBody.innerHTML = '';
+
+                    if (users.length === 0) {
+                        usersTableBody.innerHTML = '<tr><td colspan="4">No registered users found.</td></tr>';
+                        return;
+                    }
+
+                    users.forEach(user => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td><strong>${user.username}</strong></td>
+                            <td>${user.height || '---'}</td>
+                            <td>${user.sittingHours || '---'}</td>
+                            <td>
+                                <button class="btn-delete delete-user-btn" data-username="${user.username}">Delete Account</button>
+                            </td>
+                        `;
+                        usersTableBody.appendChild(row);
+                    });
+
+                    // Attach event listeners for account deletion buttons
+                    document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const usernameToDelete = e.target.getAttribute('data-username');
+                            if (confirm(`Are you sure you want to delete the account for ${usernameToDelete}?`)) {
+                                const delResponse = await fetch('/api/users/delete', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ username: usernameToDelete })
+                                });
+                                if (delResponse.ok) {
+                                    renderUsers();
+                                } else {
+                                    alert('Failed to delete user account.');
+                                }
+                            }
+                        });
+                    });
+                } catch (err) {
+                    console.error("Error loading users:", err);
+                }
+            }
+
+            // 6. RENDER CHAIR POSTS FROM SERVER
+            async function renderChairs() {
+                try {
+                    const response = await fetch('/api/chairs');
+                    const chairs = await response.json();
+                    chairsTableBody.innerHTML = '';
+
+                    if (chairs.length === 0) {
+                        chairsTableBody.innerHTML = '<tr><td colspan="4">No chair listings found.</td></tr>';
+                        return;
+                    }
+
+                    chairs.forEach((chair, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td><strong>${chair.name || chair.chairName || 'Unnamed Chair'}</strong></td>
+                            <td><code>${chair.userId || chair.username || 'Unknown'}</code></td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" class="chair-feature-toggle" data-index="${index}" ${chair.isFeatured ? 'checked' : ''}>
+                                    Featured
+                                </label>
+                            </td>
+                            <td>
+                                <button class="btn-delete delete-chair-btn" data-index="${index}">Delete Post</button>
+                            </td>
+                        `;
+                        chairsTableBody.appendChild(row);
+                    });
+
+                    // Attach event listeners to toggle the "featured" state
+                    document.querySelectorAll('.chair-feature-toggle').forEach(toggle => {
+                        toggle.addEventListener('change', async (e) => {
+                            const index = e.target.getAttribute('data-index');
+                            const isChecked = e.target.checked;
+                            await fetch('/api/chairs/toggle-featured', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ index: parseInt(index), isFeatured: isChecked })
+                            });
+                        });
+                    });
+                    document.querySelectorAll('.delete-chair-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const indexToDelete = e.target.getAttribute('data-index');
+                            if (confirm('Are you sure you want to delete this chair post?')) {
+                                const delResponse = await fetch('/api/chairs/delete', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ index: parseInt(indexToDelete) })
+                                });
+                                if (delResponse.ok) {
+                                    renderChairs();
+                                } else {
+                                    alert('Failed to delete chair post.');
+                                }
+                            }
+                        });
+                    });
+                } catch (err) {
+                    console.error("Error loading chairs:", err);
+                }
+            }
+
+            // 7. RENDER LOCAL CATEGORIES
             function renderCategories() {
                 const categories = JSON.parse(localStorage.getItem('categories')) || [];
-                tableBody.innerHTML = '';
+                categoriesTableBody.innerHTML = '';
 
                 if (categories.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="4">No global categories found in database.</td></tr>';
+                    categoriesTableBody.innerHTML = '<tr><td colspan="4">No global categories found in database.</td></tr>';
                     return;
                 }
 
                 categories.forEach(category => {
                     const row = document.createElement('tr');
-                    
-                    // Create rows containing category fields along with an interactive toggle checkbox
                     row.innerHTML = `
                         <td><code>${category.id}</code></td>
                         <td><strong>${category.name}</strong></td>
@@ -133,18 +276,14 @@
                             </label>
                         </td>
                     `;
-                    
-                    tableBody.appendChild(row);
+                    categoriesTableBody.appendChild(row);
                 });
 
-                // 6. STATE LOGIC HANDLER: Attach event listeners to detect clicks on toggles
                 const toggles = document.querySelectorAll('.feature-toggle');
                 toggles.forEach(toggle => {
                     toggle.addEventListener('change', (e) => {
                         const targetId = e.target.getAttribute('data-id');
                         const isChecked = e.target.checked;
-                        
-                        // Pull live array data, manipulate target element, and commit update changes back to storage
                         const currentCategories = JSON.parse(localStorage.getItem('categories')) || [];
                         const matchedCategory = currentCategories.find(cat => String(cat.id) === String(targetId));
                         
@@ -156,6 +295,9 @@
                 });
             }
 
+            // Execute all table renders
+            renderUsers();
+            renderChairs();
             renderCategories();
         });
     </script>

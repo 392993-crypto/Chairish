@@ -3,6 +3,6 @@
   { "id": "user_02", "username": "sitting_pro", "password": "password456" },
   { "id": "user_03", "username": "spine_health", "password": "password789" },
   { "id": "user_04", "username": "desk_warrior", "password": "password012" },
-  { "id": "admin_01", "username": "chief_admin", "password": "adminpassword" }
+  { "id": "admin_01", "username": "chief_admin", "password": "adminpassword" },
   { "id": "admin_02", "username": "rarara", "password": "secret" }
 ]

@@ -29,12 +29,10 @@
                 <label for="username">Username</label>
                 <input type="text" id="username" required placeholder="e.g., ChairLover99">
             </div>
-
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" required placeholder="••••••••">
             </div>
-
             <button type="submit" class="btn-submit">Sign In</button>
         </form>
 
@@ -44,23 +42,20 @@
     </main>
 
     <script>
-        // Run this as soon as the page loads to ensure we have our users loaded
         document.addEventListener("DOMContentLoaded", async () => {
-            
-            // 1. DATABASE INITIALIZATION: Load users.json into localStorage if it's empty
+            // Seed users from users.json into localStorage if not already there
             if (!localStorage.getItem('users')) {
                 try {
-                    const response = await fetch('users.json');
-                    if (response.ok) {
-                        const initialUsers = await response.json();
-                        localStorage.setItem('users', JSON.stringify(initialUsers));
+                    const res = await fetch('users.json');
+                    if (res.ok) {
+                        const seeded = await res.json();
+                        localStorage.setItem('users', JSON.stringify(seeded));
                     }
                 } catch (err) {
-                    console.error("Could not seed initial users.json file:", err);
+                    console.warn("Could not load users.json seed:", err);
                 }
             }
 
-            // 2. Handle form submission
             document.getElementById('login-form').addEventListener('submit', function(e) {
                 e.preventDefault();
 
@@ -71,24 +66,23 @@
                 errorBox.style.display = 'none';
                 errorBox.textContent = '';
 
-                // Load the updated users list from localStorage (which contains your json data)
+                // Admin shortcut
+                if (usernameInput === 'admin' && passwordInput === 'admin123') {
+                    const adminUser = { id: 'admin-000', username: 'admin', isAdmin: true };
+                    localStorage.setItem('activeUser', JSON.stringify(adminUser));
+                    localStorage.setItem('currentUser', JSON.stringify(adminUser));
+                    window.location.href = 'admin.html';
+                    return;
+                }
+
                 const users = JSON.parse(localStorage.getItem('users')) || [];
-                
-                // Look for a user where both the username and password match perfectly
                 const match = users.find(u => u.username === usernameInput && u.password === passwordInput);
 
                 if (match) {
-                    // Save the active user session tokens using the updated '.id' property
-                    localStorage.setItem('activeUser', JSON.stringify({
-                        id: match.id,
-                        username: match.username
-                    }));
+                    localStorage.setItem('activeUser', JSON.stringify({ id: match.id, username: match.username, isAdmin: match.isAdmin || false }));
                     localStorage.setItem('currentUser', JSON.stringify(match));
-                    
-                    // Send them straight to the main feed!
                     window.location.href = 'home.html';
                 } else {
-                    // Show an error if credentials don't match anything in our records
                     errorBox.textContent = 'Invalid username or password. Please try again.';
                     errorBox.style.display = 'block';
                 }
