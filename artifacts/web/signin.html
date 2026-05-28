@@ -44,42 +44,55 @@
     </main>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const usernameInput = document.getElementById('username').value.trim();
-            const passwordInput = document.getElementById('password').value;
-            const errorBox = document.getElementById('error-message');
-
-            errorBox.style.display = 'none';
-            errorBox.textContent = '';
-
-            // 1. Admin shortcut
-            if (usernameInput === 'admin' && passwordInput === 'admin123') {
-                const adminUser = { userId: 'admin-000', username: 'admin', isAdmin: true };
-                localStorage.setItem('activeUser', JSON.stringify(adminUser));
-                localStorage.setItem('currentUser', JSON.stringify(adminUser));
-                window.location.href = 'admin.html';
-                return;
+        // Run this as soon as the page loads to ensure we have our users loaded
+        document.addEventListener("DOMContentLoaded", async () => {
+            
+            // 1. DATABASE INITIALIZATION: Load users.json into localStorage if it's empty
+            if (!localStorage.getItem('users')) {
+                try {
+                    const response = await fetch('users.json');
+                    if (response.ok) {
+                        const initialUsers = await response.json();
+                        localStorage.setItem('users', JSON.stringify(initialUsers));
+                    }
+                } catch (err) {
+                    console.error("Could not seed initial users.json file:", err);
+                }
             }
 
-            // 2. Look up in the registered users list
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const match = users.find(u => u.username === usernameInput && u.password === passwordInput);
+            // 2. Handle form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            if (match) {
-                // Save both the session token and the full user (for profile.js)
-                localStorage.setItem('activeUser', JSON.stringify({
-                    userId: match.userId,
-                    username: match.username,
-                    isAdmin: match.isAdmin || false
-                }));
-                localStorage.setItem('currentUser', JSON.stringify(match));
-                window.location.href = 'home.html';
-            } else {
-                errorBox.textContent = 'Invalid username or password. Please try again.';
-                errorBox.style.display = 'block';
-            }
+                const usernameInput = document.getElementById('username').value.trim();
+                const passwordInput = document.getElementById('password').value;
+                const errorBox = document.getElementById('error-message');
+
+                errorBox.style.display = 'none';
+                errorBox.textContent = '';
+
+                // Load the updated users list from localStorage (which contains your json data)
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                
+                // Look for a user where both the username and password match perfectly
+                const match = users.find(u => u.username === usernameInput && u.password === passwordInput);
+
+                if (match) {
+                    // Save the active user session tokens using the updated '.id' property
+                    localStorage.setItem('activeUser', JSON.stringify({
+                        id: match.id,
+                        username: match.username
+                    }));
+                    localStorage.setItem('currentUser', JSON.stringify(match));
+                    
+                    // Send them straight to the main feed!
+                    window.location.href = 'home.html';
+                } else {
+                    // Show an error if credentials don't match anything in our records
+                    errorBox.textContent = 'Invalid username or password. Please try again.';
+                    errorBox.style.display = 'block';
+                }
+            });
         });
     </script>
 

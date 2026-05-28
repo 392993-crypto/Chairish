@@ -1,7 +1,8 @@
 [
-  { "id": "user_01", "username": "alpha_tester", "email": "alpha@ergo.com", "role": "user" },
-  { "id": "user_02", "username": "sitting_pro", "email": "pro@ergo.com", "role": "user" },
-  { "id": "user_03", "username": "spine_health", "email": "spine@ergo.com", "role": "user" },
-  { "id": "user_04", "username": "desk_warrior", "email": "desk@ergo.com", "role": "user" },
-  { "id": "admin_01", "username": "chief_admin", "email": "admin@ergo.com", "role": "admin" }
+  { "id": "user_01", "username": "alpha_tester", "password": "password123" },
+  { "id": "user_02", "username": "sitting_pro", "password": "password456" },
+  { "id": "user_03", "username": "spine_health", "password": "password789" },
+  { "id": "user_04", "username": "desk_warrior", "password": "password012" },
+  { "id": "admin_01", "username": "chief_admin", "password": "adminpassword" }
+  { "id": "admin_02", "username": "rarara", "password": "secret" }
 ]
