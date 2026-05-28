@@ -1,12 +1,163 @@
-<nav class="navbar">
-  <div class="nav-left">
-    <a href="home.html" class="nav-link">Home</a>
-    <a href="create.html" class="nav-link">Add Chair</a>
-    <a href="profile.html" class="nav-link">Profile</a>
-    <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ErgoChair Share</title>
+    <style>
+        /* Giving the admin page a distinctly different, more analytical look */
+        body { font-family: sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; }
+        .container { padding: 30px; max-width: 1000px; margin: 0 auto; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .admin-table th, .admin-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .admin-table th { background-color: #343a40; color: white; }
+        .admin-table tr:nth-child(even) { background-color: #f8f9fa; }
+        .error-box { background-color: #f8d7da; color: #721c24; padding: 20px; border-radius: 5px; border: 1px solid #f5c6cb; margin-top: 5px; }
+    </style>
+</head>
+<body>
 
-  <div class="nav-right">
-    <a href="admin.html" class="nav-link admin-btn">Admin</a>
-  </div>
-</nav>
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="home.html" class="nav-link">Home</a>
+        <a href="create.html" class="nav-link">Add Chair</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+        <a href="checkpoints.html" class="nav-link">Checkpoints</a>
+      </div>
+
+      <div class="nav-right">
+        <a href="admin.html" class="nav-link admin-btn">Admin</a>
+      </div>
+    </nav>
+
+    <div class="container">
+        <div id="access-denied" class="error-box">
+            <h2>Access Denied</h2>
+            <p>You do not have permission to view the Admin Dashboard. Only authorized administrators may access this view.</p>
+            <a href="home.html">Return to Home Feed</a>
+        </div>
+
+        <div id="admin-content" style="display: none;">
+            <h1>Admin Control Panel</h1>
+            <p>Welcome back, Administrator. Use the interface below to manage application settings and featured collections.</p>
+            
+            <h2>Manage Categories</h2>
+            <p>Check or uncheck a category to update its visibility in the "Featured Categories" section on the Home Page feed.</p>
+            
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Description</th>
+                        <th>Featured Status</th>
+                    </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const accessDeniedDiv = document.getElementById('access-denied');
+            const adminContentDiv = document.getElementById('admin-content');
+            const tableBody = document.getElementById('categories-table-body');
+
+            // 1. ROUTE GUARD: Check if anyone is logged in first
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                return; // Leave access denied visible
+            }
+
+            // 2. CROSS-REFERENCE WITH EXTERNAL FILE: Verify if their username is in admins.json
+            try {
+                const response = await fetch('admins.json');
+                if (!response.ok) {
+                    throw new Error("Could not load the authorized admin credentials file.");
+                }
+                
+                // Assuming admins.json is formatted as a simple array: ["alex123", "chair_master_admin"]
+                const adminUsernames = await response.json();
+
+                // If the logged-in user's username is NOT found in the admin file, block them
+                if (!adminUsernames.includes(currentUser.username)) {
+                    return; // Leave access denied visible
+                }
+                
+            } catch (error) {
+                console.error("Admin verification process failed:", error);
+                return; // Treat errors as unauthorized for safety
+            }
+
+            // 3. AUTHORIZATION PASSED: Flip the UI wrappers to expose the panel
+            accessDeniedDiv.style.display = 'none';
+            adminContentDiv.style.display = 'block';
+
+            // 4. DATABASE INITIALIZATION: Seed categories into localStorage if missing
+            if (!localStorage.getItem('categories')) {
+                try {
+                    const catResponse = await fetch('categories.json');
+                    if (catResponse.ok) {
+                        const initialCategories = await catResponse.json();
+                        localStorage.setItem('categories', JSON.stringify(initialCategories));
+                    }
+                } catch (err) {
+                    console.error("Could not fetch the initial categories.json file:", err);
+                }
+            }
+
+            // 5. RENDER SYSTEM STATE: Pull and display data from the unified localStorage key
+            function renderCategories() {
+                const categories = JSON.parse(localStorage.getItem('categories')) || [];
+                tableBody.innerHTML = '';
+
+                if (categories.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4">No global categories found in database.</td></tr>';
+                    return;
+                }
+
+                categories.forEach(category => {
+                    const row = document.createElement('tr');
+                    
+                    // Create rows containing category fields along with an interactive toggle checkbox
+                    row.innerHTML = `
+                        <td><code>${category.id}</code></td>
+                        <td><strong>${category.name}</strong></td>
+                        <td>${category.description || 'No description available'}</td>
+                        <td>
+                            <label>
+                                <input type="checkbox" class="feature-toggle" data-id="${category.id}" ${category.isFeatured ? 'checked' : ''}>
+                                Featured
+                            </label>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+
+                // 6. STATE LOGIC HANDLER: Attach event listeners to detect clicks on toggles
+                const toggles = document.querySelectorAll('.feature-toggle');
+                toggles.forEach(toggle => {
+                    toggle.addEventListener('change', (e) => {
+                        const targetId = e.target.getAttribute('data-id');
+                        const isChecked = e.target.checked;
+                        
+                        // Pull live array data, manipulate target element, and commit update changes back to storage
+                        const currentCategories = JSON.parse(localStorage.getItem('categories')) || [];
+                        const matchedCategory = currentCategories.find(cat => String(cat.id) === String(targetId));
+                        
+                        if (matchedCategory) {
+                            matchedCategory.isFeatured = isChecked;
+                            localStorage.setItem('categories', JSON.stringify(currentCategories));
+                        }
+                    });
+                });
+            }
+
+            renderCategories();
+        });
+    </script>
+</body>
+</html>
