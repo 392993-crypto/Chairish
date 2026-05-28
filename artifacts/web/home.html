@@ -24,51 +24,9 @@
         <h1>Ergonomic Chairs Feed</h1>
         <p>Browse community-shared office chairs or click "Add Chair" to post your own.</p>
         
-        <div id="chairs-feed">Loading feed...</div>
+        <div id="chair-grid">Loading feed...</div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const feedContainer = document.getElementById('chairs-feed');
-
-            // 1. DATABASE INITIALIZATION: Only fetch the JSON file if localStorage is empty
-            if (!localStorage.getItem('chairs')) {
-                try {
-                    const response = await fetch('chairs.json');
-                    if (response.ok) {
-                        const initialChairs = await response.json();
-                        localStorage.setItem('chairs', JSON.stringify(initialChairs));
-                    }
-                } catch (err) {
-                    console.error("Could not seed initial chairs.json file:", err);
-                }
-            }
-
-            // 2. READ LIVE APP STATE: Always pull from the unified localStorage key
-            const chairs = JSON.parse(localStorage.getItem('chairs')) || [];
-
-            feedContainer.innerHTML = '';
-
-            if (chairs.length === 0) {
-                feedContainer.innerHTML = '<p>No chairs found.</p>';
-                return;
-            }
-
-            // 3. RENDER ALL CHAIRS
-            chairs.forEach(chair => {
-                const chairCard = document.createElement('div');
-                chairCard.className = 'chair-card';
-                
-                chairCard.innerHTML = `
-                    <h2>${chair.name}</h2>
-                    <p>${chair.description ? chair.description.substring(0, 100) + '...' : 'No description provided.'}</p>
-                    <a href="postinfo.html?id=${chair.id}">View Details</a>
-                    <hr>
-                `;
-                
-                feedContainer.appendChild(chairCard);
-            });
-        });
-    </script>
+    <script src="home.js"></script>
 </body>
 </html>

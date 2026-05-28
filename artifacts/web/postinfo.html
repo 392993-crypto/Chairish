@@ -67,6 +67,17 @@
             document.getElementById('chair-name').textContent = activeChair.name;
             document.getElementById('chair-description').textContent = activeChair.description;
             document.getElementById('chair-author').textContent = authorUsername;
+
+            // 6. Check if the currently logged-in user is the author
+            // Make sure 'currentUser' matches the key you used when creating your login feature!
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            // If a user is logged in, and their ID matches the chair's creator ID...
+            if (currentUser && String(currentUser.id) === String(activeChair.userId)) {
+                // ...find the action buttons div and put an edit button inside it!
+                const actionButtons = document.getElementById('action-buttons');
+                actionButtons.innerHTML = `<a href="editpost.html?id=${chairId}"><button>Edit Chair</button></a>`;
+            }
         });
 
         function showError() {
