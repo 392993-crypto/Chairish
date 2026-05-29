@@ -34,6 +34,35 @@
             <p id="chair-description"></p>
 
             <div id="action-buttons" style="margin-top:1rem;"></div>
+
+            <hr style="margin: 2rem 0;">
+
+            <div id="ergo-match-section">
+                <h2 style="margin-bottom: 0.4rem;">🪑 Ergo-Match</h2>
+                <p style="color:#555; margin-top:0; margin-bottom:1rem;">Get a personalized AI compatibility analysis between this chair and your ergo profile.</p>
+                <button id="ergo-match-btn" style="
+                    padding: 10px 22px;
+                    background: #4f46e5;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    font-weight: bold;
+                    cursor: pointer;
+                ">Run Ergo-Match</button>
+
+                <div id="ergo-match-result" style="
+                    display: none;
+                    margin-top: 1.5rem;
+                    background: #f5f3ff;
+                    border: 1px solid #c4b5fd;
+                    border-radius: 8px;
+                    padding: 1.2rem 1.4rem;
+                    line-height: 1.7;
+                    white-space: pre-wrap;
+                    font-size: 0.97rem;
+                "></div>
+            </div>
         </div>
 
         <div id="error-container" style="display:none;">
@@ -83,6 +112,69 @@
                 document.getElementById('action-buttons').innerHTML =
                     `<a href="editpost.html?id=${chairId}"><button>Edit Chair</button></a>`;
             }
+
+            // Ergo-Match button
+            document.getElementById('ergo-match-btn').addEventListener('click', async () => {
+                const activeUser = JSON.parse(localStorage.getItem('activeUser'));
+                if (!activeUser) {
+                    alert('Please sign in to use Ergo-Match.');
+                    return;
+                }
+
+                const btn = document.getElementById('ergo-match-btn');
+                const resultBox = document.getElementById('ergo-match-result');
+
+                btn.disabled = true;
+                btn.textContent = 'Analysing…';
+                resultBox.style.display = 'block';
+                resultBox.textContent = '';
+
+                const userProfile = {
+                    height:      activeUser.height      || null,
+                    sittingHours:activeUser.sittingHours|| null,
+                    posture:     activeUser.posture      || null,
+                    deskType:    activeUser.deskType     || null,
+                    chairUse:    activeUser.chairUse     || null,
+                    lumbarPref:  activeUser.lumbarPref   || null,
+                    material:    activeUser.material     || null,
+                    aesthetic:   activeUser.aesthetic    || null,
+                    priority:    activeUser.priority     || null,
+                };
+
+                try {
+                    const res = await fetch('/api/ergo-match', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chair, userProfile }),
+                    });
+
+                    if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let buffer = '';
+
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        buffer = lines.pop();
+
+                        for (const line of lines) {
+                            if (!line.startsWith('data: ')) continue;
+                            const json = JSON.parse(line.slice(6));
+                            if (json.error) throw new Error(json.error);
+                            if (json.content) resultBox.textContent += json.content;
+                        }
+                    }
+                } catch (err) {
+                    resultBox.textContent = '⚠️ Could not complete analysis: ' + err.message;
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Run Ergo-Match Again';
+                }
+            });
         });
 
         function showError() {
