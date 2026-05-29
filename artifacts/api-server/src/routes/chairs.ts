@@ -24,7 +24,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_001",
     name: "my grandma sat in this and said it was fine so i bought it",
     brand: "Some Garage Sale",
-    image: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=600&fit=crop",
     categoryId: "cat_03",
     description:
       "Found this at a garage sale for $4. The previous owner was a retired librarian named Gertrude who told me she had owned it for 40 years and it had never once complained. The wood is solid, the cushion is somehow still soft, and it has a faint smell of lavender and mystery. My grandma sat in it, nodded once, and said 'fine.' That's the highest praise she gives anything. I bought it immediately.",
@@ -35,7 +35,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_002",
     name: "i think this chair is haunted but it's really comfortable so whatever",
     brand: "Unknown Origin",
-    image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd4?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&fit=crop",
     categoryId: "cat_02",
     description:
       "Got this from an estate sale in a house that the realtor described as 'having a lot of character.' The velvet is original and somehow perfectly preserved. Sometimes it faces a different direction than I left it. The lumbar support is supernatural — genuinely the best I've ever experienced, and I have tried many chairs. Whatever is happening in this chair is working for my back specifically.",
@@ -46,7 +46,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_003",
     name: "the chair that made my coworker say 'okay but why does your chair look like that'",
     brand: "Knoll",
-    image: "https://images.unsplash.com/photo-1489895686042-6fc7af7ca4ab?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1589363460779-cd717d0f8f18?w=600&fit=crop",
     categoryId: "cat_01",
     description:
       "It's a Knoll Generation. It looks like a very confident sci-fi prop from a movie where the future went well. Multiple coworkers have stopped mid-sentence to ask about it. It has no traditional lumbar support and somehow supports my lumbar better than anything I've owned. You can sit in it approximately six different ways and all of them are technically correct. The chair has more personality than most people I know.",
@@ -57,7 +57,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_004",
     name: "bought this thinking it was an accent chair but it's actually my main chair now sorry",
     brand: "CB2",
-    image: "https://images.unsplash.com/photo-1519961100945-8a56fd1e78d2?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&fit=crop",
     categoryId: "cat_04",
     description:
       "This was supposed to be a reading nook chair. A decorative situation. Something to put in the corner and drape a blanket over for guests to admire. I sat in it once to test it and have not left. The curved back cradles you in a way that feels personally designed for my specific skeleton. I have moved my entire desk setup to face this chair. I am typing this from my accent chair.",
@@ -68,7 +68,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_005",
     name: "the IKEA chair i built upside down the first time and it somehow sat better that way",
     brand: "IKEA",
-    image: "https://images.unsplash.com/photo-1540574163026-b7e4a7a7b461?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&fit=crop",
     categoryId: "cat_03",
     description:
       "IKEA STEFAN. Classic. Affordable. Comes in a flat box that feels smaller than it should. I followed the instructions incorrectly the first time and assembled the legs inverted. Sat in it to test. Better than the correct version. Disassembled, reassembled correctly, immediately worse. I don't understand what happened. Now I have four of these assembled correctly because I was too scared to try the other way again.",
@@ -79,7 +79,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_006",
     name: "this chair has more adjustments than i have decisions in my life",
     brand: "Humanscale",
-    image: "https://images.unsplash.com/photo-1574087988479-e9e49c13c7a4?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&fit=crop",
     categoryId: "cat_01",
     description:
       "The Humanscale Freedom. It reclines automatically based on your body weight, which sounds unsettling until you realize it is the most comfortable thing that has ever happened to you. Height, arm width, arm height, arm pivot, headrest, tilt tension — the adjustability is almost accusatory, as if the chair is asking why you haven't figured yourself out yet. I spent three hours adjusting it. I would do it again.",
@@ -90,7 +90,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_007",
     name: "my dog is not allowed on this chair but he sits on it whenever i leave the room",
     brand: "Pottery Barn",
-    image: "https://images.unsplash.com/photo-1617103996702-96ff29b1c467?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1561677978-583a8c7a4b43?w=600&fit=crop",
     categoryId: "cat_02",
     description:
       "Oversized linen armchair in a color described as 'Natural' which means it shows every single dog hair in perfect high definition. The cushions are thick, the frame is solid wood, and it has a gentle recline that makes you want to stay forever. My dog Biscuit has determined it is also his chair. I know this because of the warm spot and the guilty expression every time I come home. It is a good chair for both of us.",
@@ -101,7 +101,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_008",
     name: "i bought this outdoor chair and then just started using it inside because it rules",
     brand: "Fermob",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&fit=crop",
     categoryId: "cat_05",
     description:
       "Fermob Luxembourg. Bright orange. Designed for patios and gardens. Mine has lived in my living room for two years because the color makes me unreasonably happy and it turns out steel mesh is a perfect seat for indoors too. Guests always ask where it's from. I say 'outside originally.' They nod like this makes sense. It does not, but the chair is excellent.",
@@ -123,7 +123,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_010",
     name: "a rocking chair that my entire family has strong opinions about",
     brand: "Vermont Furniture Designs",
-    image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&fit=crop",
     categoryId: "cat_02",
     description:
       "Solid maple rocking chair that was my grandmother's, then my mother's, and is now technically mine although three separate family members have texted asking if they can have it. The joints are still tight after 50 years. The runners are perfectly balanced — one push and you rock for what feels like 45 seconds before stopping. My aunt says it belongs in her house. My cousin says the same. I say it belongs here, in front of my window, and I am winning for now.",
@@ -134,7 +134,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_011",
     name: "the most aggressively comfortable chair at my local coffee shop that i think about when i'm home",
     brand: "Unknown",
-    image: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&fit=crop",
     categoryId: "cat_04",
     description:
       "There is a coffee shop near my apartment that has four of these tufted velvet chairs near the window. I have never sat in the same one twice because I am trying to determine which is the best. They all appear identical. They are not identical. One of them has a quality that I can only describe as 'knowing.' I asked the owner where they got them. She said 'oh just some place.' I have been back eleven times.",
@@ -145,7 +145,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_012",
     name: "technically a dining chair but i do all of my thinking in it",
     brand: "Bertoia",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=600&fit=crop",
     categoryId: "cat_03",
     description:
       "Bertoia Side Chair. Wire construction. Technically meant for dining tables, but the open grid back and gentle seat bucket make it the exact right amount of uncomfortable to keep you alert without being miserable. I have solved three major problems in this chair. Two minor personal crises. I do not eat at the table, I sit here and think. My dining table is now a storage surface. The chair has claimed its purpose.",
@@ -156,7 +156,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_013",
     name: "found this outside someone's house with a sign that said FREE and i have zero regrets",
     brand: "La-Z-Boy probably",
-    image: "https://images.unsplash.com/photo-1631248816389-2db4f040e7d1?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1561677978-583a8c7a4b43?w=600&fit=crop",
     categoryId: "cat_02",
     description:
       "The recliner was on the curb with a handwritten FREE sign in blue marker. It is brown. It reclines to a degree that I can only describe as 'too flat to be upright, not flat enough to be a bed.' The footrest mechanism is a lever that requires exactly 14 pounds of force to engage. I know this because I tested it. It smells like someone else's good memories. I feel at peace in this chair and I didn't pay anything for it.",
@@ -167,7 +167,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_014",
     name: "the chair that makes visitors say 'oh' when they sit down and then go quiet for a moment",
     brand: "Vitra",
-    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&fit=crop",
     categoryId: "cat_04",
     description:
       "Vitra Soft Shell Chair. When someone sits in it for the first time they always make a small sound. Not words, just 'oh.' Then silence. Then they look at it from the outside as if betrayed that a chair can do that. The shell flex is calibrated well enough that your own body weight does most of the ergonomic work for you. I have had guests sit in this chair and quietly rearrange their entire plan for the afternoon.",
@@ -178,7 +178,7 @@ const SEED_CHAIRS = [
     id: "chair_silly_015",
     name: "adirondack chair that i painted myself and it looks like i painted it myself",
     brand: "DIY",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1589363460779-cd717d0f8f18?w=600&fit=crop",
     categoryId: "cat_05",
     description:
       "I built this Adirondack chair from a kit and then painted it teal because teal looked good on the can. It does not look as good on the chair. The paint coverage is uneven in a way that I am choosing to call 'textured.' One arm is 3mm lower than the other because I drilled the pilot hole wrong. It is structurally sound. It sits beautifully in the garden. At sunset the light hits the bad paint job and it looks almost intentional. Almost.",
