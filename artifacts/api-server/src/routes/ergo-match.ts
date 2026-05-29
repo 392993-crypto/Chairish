@@ -3,9 +3,8 @@ import OpenAI from "openai";
 
 const router: IRouter = Router();
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 router.post("/ergo-match", async (req, res) => {
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const { chair, userProfile } = req.body as {
     chair: Record<string, unknown>;
     userProfile: Record<string, unknown>;
