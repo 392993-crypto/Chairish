@@ -15,6 +15,14 @@
         .error-box { background-color: #f8d7da; color: #721c24; padding: 20px; border-radius: 5px; border: 1px solid #f5c6cb; margin-top: 5px; }
         .btn-delete { background-color: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
         .btn-delete:hover { background-color: #bd2130; }
+        .toggle-switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; inset: 0; background-color: #ccc; border-radius: 24px; transition: 0.3s; }
+        .toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+        input:checked + .toggle-slider { background-color: #28a745; }
+        input:checked + .toggle-slider:before { transform: translateX(22px); }
+        .toggle-label { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+        .toggle-label span { color: #555; }
     </style>
 </head>
 <body>
@@ -270,9 +278,12 @@
                         <td><strong>${category.name}</strong></td>
                         <td>${category.description || 'No description available'}</td>
                         <td>
-                            <label>
-                                <input type="checkbox" class="feature-toggle" data-id="${category.id}" ${category.isFeatured ? 'checked' : ''}>
-                                Featured
+                            <label class="toggle-label">
+                                <span class="toggle-switch">
+                                    <input type="checkbox" class="feature-toggle" data-id="${category.id}" ${category.isFeatured ? 'checked' : ''}>
+                                    <span class="toggle-slider"></span>
+                                </span>
+                                <span id="toggle-label-${category.id}">${category.isFeatured ? 'Featured' : 'Not Featured'}</span>
                             </label>
                         </td>
                     `;
@@ -286,10 +297,12 @@
                         const isChecked = e.target.checked;
                         const currentCategories = JSON.parse(localStorage.getItem('categories')) || [];
                         const matchedCategory = currentCategories.find(cat => String(cat.id) === String(targetId));
-                        
+
                         if (matchedCategory) {
                             matchedCategory.isFeatured = isChecked;
                             localStorage.setItem('categories', JSON.stringify(currentCategories));
+                            const label = document.getElementById(`toggle-label-${targetId}`);
+                            if (label) label.textContent = isChecked ? 'Featured' : 'Not Featured';
                         }
                     });
                 });

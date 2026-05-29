@@ -1,8 +1,48 @@
 let allChairs = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    renderFeaturedCategories();
     fetchChairFeed();
 });
+
+async function renderFeaturedCategories() {
+    const container = document.getElementById('featured-categories');
+    const section = document.getElementById('featured-section');
+
+    // Load from localStorage (seeded by admin page), fall back to categories.json
+    let categories = JSON.parse(localStorage.getItem('categories'));
+    if (!categories) {
+        try {
+            const res = await fetch('/categories.json');
+            categories = await res.json();
+            localStorage.setItem('categories', JSON.stringify(categories));
+        } catch {
+            categories = [];
+        }
+    }
+
+    const featured = categories.filter(c => c.isFeatured);
+
+    if (featured.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    container.innerHTML = featured.map(cat => `
+        <div style="
+            background: #f0f4ff;
+            border: 1px solid #c3d0f5;
+            border-radius: 10px;
+            padding: 1rem 1.4rem;
+            min-width: 160px;
+            flex: 1 1 160px;
+            max-width: 240px;
+        ">
+            <h3 style="margin: 0 0 0.3rem;">${cat.name}</h3>
+            <p style="margin: 0; font-size: 0.85rem; color: #555;">${cat.description || ''}</p>
+        </div>
+    `).join('');
+}
 
 async function fetchChairFeed() {
     try {
