@@ -37,6 +37,14 @@
 
             <hr style="margin: 2rem 0;">
 
+            <div id="similar-chairs-section" style="margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 0.4rem;">You May Also Like</h2>
+                <p style="color:#555; margin-top:0; margin-bottom:1rem;">Chairs with similar tags or category.</p>
+                <div id="similar-chairs-grid" style="display:flex; gap:1rem; flex-wrap:wrap;"></div>
+            </div>
+
+            <hr style="margin: 2rem 0;">
+
             <div id="ergo-match-section">
                 <h2 style="margin-bottom: 0.4rem;">🪑 Ergo-Match</h2>
                 <p style="color:#555; margin-top:0; margin-bottom:1rem;">Get a personalized AI compatibility analysis between this chair and your ergo profile.</p>
@@ -78,10 +86,11 @@
             if (!chairId) { showError(); return; }
 
             let chair = null;
+            let chairs = [];
             try {
                 const res = await fetch('/api/chairs');
                 if (!res.ok) throw new Error('Failed to fetch chairs');
-                const chairs = await res.json();
+                chairs = await res.json();
                 chair = chairs.find(c => String(c.id) === String(chairId));
             } catch (err) {
                 console.error(err);
@@ -100,6 +109,9 @@
             document.getElementById('chair-category').textContent = chair.categoryId || 'Uncategorized';
             document.getElementById('chair-tags').textContent = (chair.tags || []).join(', ') || 'None';
             document.getElementById('chair-description').textContent = chair.description || '';
+
+            // Similar chairs
+            renderSimilarChairs(chairs, chair);
 
             // Look up the author's username
             const users = JSON.parse(localStorage.getItem('users')) || [];
@@ -176,6 +188,55 @@
                 }
             });
         });
+
+        function renderSimilarChairs(allChairs, current) {
+            const grid = document.getElementById('similar-chairs-grid');
+            const section = document.getElementById('similar-chairs-section');
+
+            const currentTags = new Set((current.tags || []).map(t => t.toLowerCase()));
+
+            const scored = allChairs
+                .filter(c => String(c.id) !== String(current.id))
+                .map(c => {
+                    let score = 0;
+                    if (c.categoryId === current.categoryId) score += 2;
+                    (c.tags || []).forEach(t => {
+                        if (currentTags.has(t.toLowerCase())) score += 1;
+                    });
+                    return { chair: c, score };
+                })
+                .filter(({ score }) => score > 0)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 4)
+                .map(({ chair }) => chair);
+
+            if (scored.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            grid.innerHTML = scored.map(c => `
+                <a href="postinfo.html?id=${c.id}" style="
+                    text-decoration: none;
+                    color: inherit;
+                    flex: 1 1 160px;
+                    max-width: 200px;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    display: block;
+                    transition: box-shadow 0.2s;
+                " onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12)'"
+                   onmouseout="this.style.boxShadow='none'">
+                    <img src="${c.image || ''}" alt="${c.name}"
+                         style="width:100%; height:120px; object-fit:cover; display:${c.image ? 'block' : 'none'};">
+                    <div style="padding: 0.7rem;">
+                        <strong style="display:block; margin-bottom:0.2rem;">${c.name}</strong>
+                        <span style="font-size:0.82rem; color:#666;">${c.brand || ''}</span>
+                    </div>
+                </a>
+            `).join('');
+        }
 
         function showError() {
             document.getElementById('chair-content').style.display = 'none';
