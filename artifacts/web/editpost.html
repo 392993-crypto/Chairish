@@ -4,52 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Chair | Chairish</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #edit-chair-form { max-width: 520px; margin-top: 1.5rem; }
+        #edit-chair-form label { font-weight: 600; color: #2d6a3f; font-size: 0.9rem; display: block; margin-bottom: 0.3rem; margin-top: 1rem; }
+        #edit-chair-form input,
+        #edit-chair-form textarea {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            border: 1.5px solid #a8d5b5;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: #f9fdf9;
+            color: #1a2e1a;
+            font-family: inherit;
+            transition: border-color 0.18s, box-shadow 0.18s;
+        }
+        #edit-chair-form input:focus,
+        #edit-chair-form textarea:focus {
+            outline: none;
+            border-color: #4a9e5c;
+            box-shadow: 0 0 0 3px rgba(74,158,92,0.18);
+            background: #fff;
+        }
+        #edit-chair-form button[type="submit"] {
+            margin-top: 1.5rem;
+            background: #2d6a3f;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 9px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        #edit-chair-form button[type="submit"]:hover { background: #1e4d2b; }
+        #edit-chair-form .cancel-link {
+            margin-left: 1rem;
+            color: #2d6a3f;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
 
     <nav class="navbar">
-      <div class="nav-left">
-        <a href="home.html" class="nav-link">Home</a>
-        <a href="create.html" class="nav-link">Add Chair</a>
-        <a href="profile.html" class="nav-link">Profile</a>
-        <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-      </div>
-
-      <div class="nav-right">
-        <a href="admin.html" class="nav-link admin-btn">Admin</a>
-      </div>
+        <div class="nav-left">
+            <a href="home.html" class="nav-link">Home</a>
+            <a href="create.html" class="nav-link">Add Chair</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="checkpoints.html" class="nav-link">Checkpoints</a>
+        </div>
+        <div class="nav-right">
+            <a href="admin.html" class="nav-link admin-btn">Admin</a>
+        </div>
     </nav>
 
     <div class="container">
         <h1>Edit Chair Details</h1>
-        <p>Make your changes below and click save to update the community feed.</p>
-        
+        <p style="color:#4a6b4e;">Make your changes below and click save to update the community feed.</p>
+
         <form id="edit-chair-form">
-            <label for="chair-name"><strong>Chair Name:</strong></label><br>
-            <input type="text" id="chair-name" required style="width: 100%; max-width: 400px; margin-bottom: 15px;"><br>
+            <label for="chair-name">Chair Name</label>
+            <input type="text" id="chair-name" required placeholder="e.g., Eames Lounge Chair">
 
-            <label for="chair-brand"><strong>Brand:</strong></label><br>
-            <input type="text" id="chair-brand" required style="width: 100%; max-width: 400px; margin-bottom: 15px;"><br>
+            <label for="chair-brand">Brand / Manufacturer</label>
+            <input type="text" id="chair-brand" required placeholder="e.g., Herman Miller">
 
-            <label for="chair-image"><strong>Image URL:</strong></label><br>
-            <input type="text" id="chair-image" style="width: 100%; max-width: 400px; margin-bottom: 15px;"><br>
+            <label for="chair-image">Image URL</label>
+            <input type="text" id="chair-image" placeholder="https://example.com/chair.jpg">
 
-            <label for="chair-tags"><strong>Tags (separate with commas):</strong></label><br>
-            <input type="text" id="chair-tags" placeholder="mesh, lumbar support, adjustable" style="width: 100%; max-width: 400px; margin-bottom: 15px;"><br>
+            <label for="chair-tags">Tags (comma-separated)</label>
+            <input type="text" id="chair-tags" placeholder="mesh, lumbar, adjustable">
 
-            <label for="chair-description"><strong>Description:</strong></label><br>
-            <textarea id="chair-description" rows="6" required style="width: 100%; max-width: 400px; margin-bottom: 15px;"></textarea><br>
+            <label for="chair-description">Description</label>
+            <textarea id="chair-description" rows="6" required placeholder="Tell us about its build, comfort, materials..."></textarea>
 
-            <button type="submit" style="cursor: pointer; padding: 8px 15px;">Save Changes</button>
-            <a href="home.html" style="margin-left: 10px;">Cancel</a>
+            <div style="margin-top:1.5rem; display:flex; align-items:center;">
+                <button type="submit">Save Changes</button>
+                <a href="home.html" class="cancel-link">Cancel</a>
+            </div>
         </form>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const editForm = document.getElementById('edit-chair-form');
-            
-            // 1. Get the chair ID from the URL (?id=XXX)
+
             const urlParams = new URLSearchParams(window.location.search);
             const chairId = urlParams.get('id');
 
@@ -59,51 +102,37 @@
                 return;
             }
 
-            // 2. Load the current chairs list from localStorage
             const chairs = JSON.parse(localStorage.getItem('chairs')) || [];
-
-            // 3. Find the specific chair we want to edit
             const activeChair = chairs.find(c => String(c.id) === String(chairId));
 
             if (!activeChair) {
-                alert("Chair not found in data! Returning to home.");
+                alert("Chair not found. Returning to home.");
                 window.location.href = 'home.html';
                 return;
             }
 
-            // 4. Fill up the form input fields with the chair's current data
             document.getElementById('chair-name').value = activeChair.name || '';
             document.getElementById('chair-brand').value = activeChair.brand || '';
             document.getElementById('chair-image').value = activeChair.image || '';
             document.getElementById('chair-description').value = activeChair.description || '';
-            
-            // Turn the tags array back into a comma-separated string for easy editing
+
             if (activeChair.tags && Array.isArray(activeChair.tags)) {
                 document.getElementById('chair-tags').value = activeChair.tags.join(', ');
-            } else {
-                document.getElementById('chair-tags').value = '';
             }
 
-            // 5. Handle saving the form data when the user clicks submit
             editForm.addEventListener('submit', (event) => {
-                event.preventDefault(); // Stop the page from reloading automatically
+                event.preventDefault();
 
-                // Update the fields on our active chair object with the new inputs
-                activeChair.name = document.getElementById('chair-name').value;
-                activeChair.brand = document.getElementById('chair-brand').value;
-                activeChair.image = document.getElementById('chair-image').value;
+                activeChair.name        = document.getElementById('chair-name').value;
+                activeChair.brand       = document.getElementById('chair-brand').value;
+                activeChair.image       = document.getElementById('chair-image').value;
                 activeChair.description = document.getElementById('chair-description').value;
 
-                // Grab the tags string, split it by commas, and clean up extra spaces
                 const tagsInput = document.getElementById('chair-tags').value;
-                activeChair.tags = tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+                activeChair.tags = tagsInput.split(',').map(t => t.trim()).filter(t => t !== '');
 
-                // Save the updated list back to localStorage
                 localStorage.setItem('chairs', JSON.stringify(chairs));
-
                 alert('Chair updated successfully!');
-                
-                // Take the user back to the main feed to see their changes
                 window.location.href = 'home.html';
             });
         });
