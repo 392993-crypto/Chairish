@@ -4,7 +4,10 @@ import OpenAI from "openai";
 const router: IRouter = Router();
 
 router.post("/ergo-match", async (req, res) => {
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    baseURL: "https://api.groq.com/openai/v1",
+  });
   const { chair, userProfile } = req.body as {
     chair: Record<string, unknown>;
     userProfile: Record<string, unknown>;
@@ -49,7 +52,7 @@ Keep the tone confident and personable — like a knowledgeable friend, not a pr
 
   try {
     const stream = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "llama-3.3-70b-versatile",
       max_completion_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
       stream: true,
