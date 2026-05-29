@@ -5,6 +5,150 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Chair | Chairish</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .create-wrap {
+      max-width: 600px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem 3rem;
+    }
+    .create-wrap h2 { margin-bottom: 0.25rem; }
+    .create-wrap > p { color: #4a9e5c; margin-bottom: 1.75rem; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #1e4d2b;
+      margin-bottom: 0.4rem;
+      font-size: 0.92rem;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="url"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border: 1.5px solid #a8d5b5;
+      border-radius: 7px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fff;
+      color: #1a2e1a;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #2d6a3f;
+      box-shadow: 0 0 0 3px rgba(45,106,63,0.12);
+    }
+    .form-group small {
+      display: block;
+      margin-top: 0.3rem;
+      color: #4a9e5c;
+      font-size: 0.82rem;
+    }
+
+    /* Image upload zone */
+    .image-upload-zone {
+      border: 2px dashed #a8d5b5;
+      border-radius: 10px;
+      background: #f2faf4;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      position: relative;
+    }
+    .image-upload-zone:hover,
+    .image-upload-zone.dragover {
+      border-color: #2d6a3f;
+      background: #e8f5e9;
+    }
+    .image-upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+    .upload-label { color: #2d6a3f; font-weight: 600; font-size: 0.95rem; }
+    .upload-sub { color: #4a9e5c; font-size: 0.82rem; margin-top: 0.2rem; }
+
+    /* Preview */
+    #image-preview-wrap {
+      display: none;
+      margin-top: 0.75rem;
+      position: relative;
+    }
+    #image-preview {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1.5px solid #a8d5b5;
+    }
+    #remove-image-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* URL fallback toggle */
+    .url-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      color: #4a9e5c;
+      font-size: 0.85rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .url-toggle span { text-decoration: underline; }
+    #url-fallback-group { display: none; margin-top: 0.6rem; }
+
+    /* Upload status */
+    #upload-status {
+      font-size: 0.84rem;
+      margin-top: 0.4rem;
+      min-height: 1.2em;
+    }
+    #upload-status.uploading { color: #2d6a3f; }
+    #upload-status.error { color: #b71c1c; }
+    #upload-status.done { color: #2d6a3f; font-weight: 600; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #2d6a3f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s;
+      margin-top: 0.5rem;
+    }
+    .submit-btn:hover { background: #1e4d2b; }
+    .submit-btn:disabled { background: #a8d5b5; cursor: not-allowed; }
+  </style>
 </head>
 <body>
 
@@ -20,50 +164,73 @@
     </div>
   </nav>
 
-  <section id="create-section" style="max-width: 600px; margin: 2rem auto; padding: 0 1rem;">
+  <div class="create-wrap">
     <h2>Post a New Chair Discovery</h2>
     <p>Fill out the details below to add a chair to the community feed.</p>
 
     <form id="add-chair-form">
-      <div style="margin-bottom: 1rem;">
-        <label for="chairName"><strong>Chair Name:</strong></label><br>
-        <input type="text" id="chairName" name="chairName" placeholder="e.g., Eames Lounge Chair" required style="width: 100%; padding: 8px; margin-top: 5px;">
+
+      <div class="form-group">
+        <label>Chair Name</label>
+        <input type="text" id="chairName" placeholder="e.g., Eames Lounge Chair" required>
       </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label for="chairBrand"><strong>Brand / Manufacturer:</strong></label><br>
-        <input type="text" id="chairBrand" name="chairBrand" placeholder="e.g., Herman Miller" required style="width: 100%; padding: 8px; margin-top: 5px;">
+      <div class="form-group">
+        <label>Brand / Manufacturer</label>
+        <input type="text" id="chairBrand" placeholder="e.g., Herman Miller" required>
       </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label for="chairImage"><strong>Image URL:</strong></label><br>
-        <input type="url" id="chairImage" name="chairImage" placeholder="https://example.com/chair-image.jpg" required style="width: 100%; padding: 8px; margin-top: 5px;">
-        <small style="color: #666;">Paste a web link to an image of the chair.</small>
+      <div class="form-group">
+        <label>Chair Photo</label>
+
+        <div class="image-upload-zone" id="upload-zone">
+          <input type="file" id="chairImageFile" accept="image/*">
+          <div class="upload-icon">📷</div>
+          <div class="upload-label">Click or drag an image here</div>
+          <div class="upload-sub">JPG, PNG, WebP or GIF — up to 8 MB</div>
+        </div>
+
+        <div id="image-preview-wrap">
+          <img id="image-preview" src="" alt="Preview">
+          <button type="button" id="remove-image-btn" title="Remove image">✕</button>
+        </div>
+
+        <div id="upload-status"></div>
+
+        <div class="url-toggle" id="url-toggle-btn">
+          <span>Or paste a URL instead</span>
+        </div>
+
+        <div id="url-fallback-group">
+          <input type="url" id="chairImageUrl" placeholder="https://example.com/chair.jpg">
+          <small>Paste a direct link to a chair image.</small>
+        </div>
+
+        <input type="hidden" id="chairImageFinal">
       </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label for="chairCategory"><strong>Category:</strong></label><br>
-        <select id="chairCategory" name="chairCategory" required style="width: 100%; padding: 8px; margin-top: 5px;">
-          <option value="" disabled selected>Loading available categories...</option>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="chairCategory" required>
+          <option value="" disabled selected>Loading categories…</option>
         </select>
       </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label for="chairDescription"><strong>Description:</strong></label><br>
-        <textarea id="chairDescription" name="chairDescription" rows="4" placeholder="Tell us about its build, comfort, materials..." required style="width: 100%; padding: 8px; margin-top: 5px; font-family: sans-serif;"></textarea>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="chairDescription" rows="4" placeholder="Tell us about its build, comfort, materials…" required></textarea>
       </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label for="chairTags"><strong>Tags:</strong></label><br>
-        <input type="text" id="chairTags" name="chairTags" placeholder="e.g. ergonomic, mesh, lumbar" style="width: 100%; padding: 8px; margin-top: 5px;">
-        <small style="color: #666;">Separate tags with commas. Used to match chairs to your profile.</small>
+      <div class="form-group">
+        <label>Tags</label>
+        <input type="text" id="chairTags" placeholder="e.g. ergonomic, mesh, lumbar">
+        <small>Separate tags with commas — used to match chairs to profiles.</small>
       </div>
 
-      <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-        Publish Chair
-      </button>
+      <button type="submit" class="submit-btn" id="submit-btn">Publish Chair</button>
+
     </form>
-  </section>
+  </div>
 
   <script src="create.js"></script>
 </body>

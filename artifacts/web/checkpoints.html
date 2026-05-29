@@ -1,118 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkpoints - Chair App</title>
-    </head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkpoints | Chairish</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .checkpoints-wrap {
+      max-width: 960px;
+      margin: 2.5rem auto;
+      padding: 0 1.25rem;
+    }
+    .checkpoints-wrap h1 {
+      margin-bottom: 0.25rem;
+    }
+    .checkpoints-wrap > p {
+      color: #4a9e5c;
+      margin-bottom: 1.75rem;
+      font-size: 1rem;
+    }
+    .cp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(45,106,63,0.10);
+    }
+    .cp-table thead {
+      background: #2d6a3f;
+      color: #fff;
+    }
+    .cp-table thead th {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      color: #c8e6c9;
+    }
+    .cp-table tbody tr {
+      border-bottom: 1px solid #a8d5b5;
+      transition: background 0.15s;
+    }
+    .cp-table tbody tr:last-child {
+      border-bottom: none;
+    }
+    .cp-table tbody tr:nth-child(even) {
+      background: #f2faf4;
+    }
+    .cp-table tbody tr:hover {
+      background: #d4edda;
+    }
+    .cp-table td {
+      padding: 0.85rem 1rem;
+      vertical-align: top;
+      font-size: 0.93rem;
+      color: #1a2e1a;
+    }
+    .cp-table td strong {
+      color: #1e4d2b;
+      white-space: nowrap;
+    }
+    .cp-table td a {
+      color: #2d6a3f;
+      font-weight: 500;
+    }
+    .cp-table td a:hover {
+      color: #1e4d2b;
+    }
+    .cp-num {
+      background: #d4edda;
+      color: #1e4d2b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+    .cp-date {
+      color: #4a9e5c;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
 <body>
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="home.html" class="nav-link">Home</a>
-            <a href="create.html" class="nav-link">Add Chair</a>
-            <a href="profile.html" class="nav-link">Profile</a>
-            <a href="checkpoints.html" class="nav-link">Checkpoints</a>
-        </div>
 
-        <div class="nav-right">
-            <a href="admin.html" class="nav-link admin-btn">Admin</a>
-        </div>
-    </nav>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="home.html" class="nav-link">Home</a>
+      <a href="create.html" class="nav-link">Add Chair</a>
+      <a href="profile.html" class="nav-link">Profile</a>
+      <a href="checkpoints.html" class="nav-link">Checkpoints</a>
+    </div>
+    <div class="nav-right">
+      <a href="admin.html" class="nav-link admin-btn">Admin</a>
+    </div>
+  </nav>
 
-    <main style="padding: 20px;">
-        <h1>Project Checkpoints</h1>
-        <p>A log documenting the 13 development milestones for this application.</p>
+  <div class="checkpoints-wrap">
+    <h1>Project Checkpoints</h1>
+    <p>13 development milestones documented for Chairish.</p>
 
-        <table border="1" style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 20px;">
-            <thead style="background-color: #f4f4f4;">
-                <tr>
-                    <th style="padding: 10px;">Checkpoint Name</th>
-                    <th style="padding: 10px;">Date Completed</th>
-                    <th style="padding: 10px;">GitHub Commit URL</th>
-                    <th style="padding: 10px;">Reflection</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px;"><strong>#01-Project-Setup</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added initial framework, folder structure, and the 3 mock JSON data files.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#02-Navigation-Routing</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Mapped out the 8 mandatory views and added the persistent Navigation Bar.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#03-Registration-Flow</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Created registration page and simulated login state mechanism using localStorage.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#04-Extended-Profile</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added 9 required user traits to the profile and an Edit Profile form.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#05-Home-Feed</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Fetched chair data and displayed items as visual cards with links to details.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#06-Create-Data</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added form to Add Chair page and logic to append new chairs with userId.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#07-View-Data</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added logic to parse chair ID from URL and display full chair info and author username.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#08-Edit-Data</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Created Edit Chair page pre-populated with data, only accessible to the author.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#09-Admin-Dashboard</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Created route guard for Admin Dashboard and pulled data from categories.json.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#10-Admin-Update</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added toggle switches to change isFeatured status and state logic to save it.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#11-Admin-Visibility</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Updated Home page to dynamically show Featured Categories toggled by admin.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#12-AI-Feature</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added Ergo-Match button passing user traits and chair details to AI endpoint for analysis.</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px;"><strong>#13-Final-Polish</strong></td>
-                    <td style="padding: 10px;">YYYY-MM-DD</td>
-                    <td style="padding: 10px;"><a href="#">GitHub Link</a></td>
-                    <td style="padding: 10px;">Added general CSS styling to ensure the app feels like a cohesive product [cite: 42], bug fixes, and completed this Checkpoints log[cite: 43].</td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+    <table class="cp-table">
+      <thead>
+        <tr>
+          <th>Checkpoint</th>
+          <th>Date</th>
+          <th>Commit</th>
+          <th>Reflection</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>#01 — Project Setup</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added initial framework, folder structure, and the 3 mock JSON data files.</td>
+        </tr>
+        <tr>
+          <td><strong>#02 — Navigation &amp; Routing</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Mapped out the 8 mandatory views and added the persistent Navigation Bar.</td>
+        </tr>
+        <tr>
+          <td><strong>#03 — Registration Flow</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Created registration page and simulated login state mechanism using localStorage.</td>
+        </tr>
+        <tr>
+          <td><strong>#04 — Extended Profile</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added 9 required user traits to the profile and an Edit Profile form.</td>
+        </tr>
+        <tr>
+          <td><strong>#05 — Home Feed</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Fetched chair data and displayed items as visual cards with links to details.</td>
+        </tr>
+        <tr>
+          <td><strong>#06 — Create Data</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added form to Add Chair page and logic to append new chairs with userId.</td>
+        </tr>
+        <tr>
+          <td><strong>#07 — View Data</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added logic to parse chair ID from URL and display full chair info and author username.</td>
+        </tr>
+        <tr>
+          <td><strong>#08 — Edit Data</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Created Edit Chair page pre-populated with data, only accessible to the author.</td>
+        </tr>
+        <tr>
+          <td><strong>#09 — Admin Dashboard</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Created route guard for Admin Dashboard and pulled data from categories.json.</td>
+        </tr>
+        <tr>
+          <td><strong>#10 — Admin Update</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added toggle switches to change isFeatured status and state logic to save it.</td>
+        </tr>
+        <tr>
+          <td><strong>#11 — Admin Visibility</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Updated Home page to dynamically show Featured Categories toggled by admin.</td>
+        </tr>
+        <tr>
+          <td><strong>#12 — AI Feature</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added Ergo-Match button passing user traits and chair details to AI endpoint for analysis.</td>
+        </tr>
+        <tr>
+          <td><strong>#13 — Final Polish</strong></td>
+          <td><span class="cp-date">YYYY-MM-DD</span></td>
+          <td><a href="#">GitHub Link</a></td>
+          <td>Added global CSS styling to ensure the app feels like a cohesive product, bug fixes, and completed this Checkpoints log.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </body>
 </html>
