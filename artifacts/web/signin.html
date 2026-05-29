@@ -43,17 +43,19 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            // Seed users from users.json into localStorage if not already there
-            if (!localStorage.getItem('users')) {
-                try {
-                    const res = await fetch('users.json');
-                    if (res.ok) {
-                        const seeded = await res.json();
-                        localStorage.setItem('users', JSON.stringify(seeded));
-                    }
-                } catch (err) {
-                    console.warn("Could not load users.json seed:", err);
+            // Always merge seed users from users.json so mock accounts are always available,
+            // while preserving any locally-registered accounts.
+            try {
+                const res = await fetch('users.json');
+                if (res.ok) {
+                    const seedUsers = await res.json();
+                    const existing = JSON.parse(localStorage.getItem('users') || '[]');
+                    const seedIds = new Set(seedUsers.map(u => u.id));
+                    const localOnly = existing.filter(u => !seedIds.has(u.id));
+                    localStorage.setItem('users', JSON.stringify([...seedUsers, ...localOnly]));
                 }
+            } catch (err) {
+                console.warn("Could not load users.json seed:", err);
             }
 
             document.getElementById('login-form').addEventListener('submit', function(e) {
