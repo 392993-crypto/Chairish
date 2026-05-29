@@ -71,6 +71,21 @@ h1, h2, h3, h4 { color: #1e4d2b; margin-top: 0; }
     color: #fff;
 }
 
+.signout-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffcdd2;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.signout-btn:hover {
+    background: rgba(220, 50, 50, 0.25);
+    color: #fff;
+    border-color: rgba(255,100,100,0.4);
+}
+
 /* ── NAV (index / signin / register pages) ───────────────── */
 .nav-container {
     display: flex;
