@@ -18,33 +18,18 @@ router.post("/ergo-match", async (req, res) => {
     return;
   }
 
-  const prompt = `You are an expert ergonomics analyst. Given a specific chair and a user's personal ergo profile, produce a warm, insightful, and honest compatibility analysis.
+  const prompt = `You are a sharp ergonomics analyst. Be concise — no filler, no padding.
 
-CHAIR DETAILS:
-- Name: ${chair.name ?? "Unknown"}
-- Brand: ${chair.brand ?? "Unknown"}
-- Category: ${chair.categoryId ?? "Unknown"}
-- Tags: ${Array.isArray(chair.tags) ? (chair.tags as string[]).join(", ") : "None"}
-- Description: ${chair.description ?? "No description provided"}
+CHAIR: ${chair.name ?? "Unknown"} by ${chair.brand ?? "Unknown"} | Category: ${chair.categoryId ?? "?"} | Tags: ${Array.isArray(chair.tags) ? (chair.tags as string[]).join(", ") : "none"} | "${chair.description ?? ""}"
 
-USER ERGO PROFILE:
-1. Height: ${userProfile.height ?? "Not set"} cm
-2. Daily Sitting Time: ${userProfile.sittingHours ?? "Not set"} hours
-3. Sitting Posture: ${userProfile.posture ?? "Not set"}
-4. Primary Desk Setup: ${userProfile.deskType ?? "Not set"}
-5. Main Chair Usage: ${userProfile.chairUse ?? "Not set"}
-6. Preferred Support: ${userProfile.lumbarPref ?? "Not set"}
-7. Material Focus: ${userProfile.material ?? "Not set"}
-8. Aesthetic Taste: ${userProfile.aesthetic ?? "Not set"}
-9. Evaluation Priority: ${userProfile.priority ?? "Not set"}
+USER PROFILE: Height ${userProfile.height ?? "?"}cm, sits ${userProfile.sittingHours ?? "?"}h/day, posture: ${userProfile.posture ?? "?"}, desk: ${userProfile.deskType ?? "?"}, use: ${userProfile.chairUse ?? "?"}, support: ${userProfile.lumbarPref ?? "?"}, material: ${userProfile.material ?? "?"}, aesthetic: ${userProfile.aesthetic ?? "?"}, priority: ${userProfile.priority ?? "?"}
 
-Write a 3–4 paragraph Ergo-Match analysis. Cover:
-- Overall compatibility score out of 10 and a one-line verdict
-- How well the chair's physical traits match the user's body and habits
-- How well it aligns with their style preferences and priorities
-- Any honest caveats or trade-offs they should know about
+Give an Ergo-Match in exactly 3 short paragraphs:
+1. Score (X/10) + one-sentence verdict.
+2. Body & habit fit — 2-3 sentences max.
+3. Style & priority fit + one honest caveat — 2-3 sentences max.
 
-Keep the tone confident and personable — like a knowledgeable friend, not a product manual.`;
+No intro, no sign-off. Start directly with the score.`;
 
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
@@ -53,7 +38,7 @@ Keep the tone confident and personable — like a knowledgeable friend, not a pr
   try {
     const stream = await openai.chat.completions.create({
       model: "llama-3.3-70b-versatile",
-      max_completion_tokens: 1024,
+      max_completion_tokens: 350,
       messages: [{ role: "user", content: prompt }],
       stream: true,
     });
