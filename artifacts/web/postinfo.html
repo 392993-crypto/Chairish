@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chair Detail - ErgoChair Share</title>
+    <title>Chair Detail - Chairish</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -14,69 +15,73 @@
         <a href="profile.html" class="nav-link">Profile</a>
         <a href="checkpoints.html" class="nav-link">Checkpoints</a>
       </div>
-
       <div class="nav-right">
         <a href="admin.html" class="nav-link admin-btn">Admin</a>
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="max-width: 700px; margin: 2rem auto; padding: 0 1rem;">
+
         <div id="chair-content">
-            <h1 id="chair-name">Loading chair details...</h1>
-            <p>Uploaded by: <strong id="chair-author">...</strong></p>
-            
+            <img id="chair-image" src="" alt="" style="max-width:100%; border-radius:8px; margin-bottom:1rem; display:none;">
+            <h1 id="chair-name">Loading...</h1>
+            <p><strong>Brand:</strong> <span id="chair-brand"></span></p>
+            <p><strong>Category:</strong> <span id="chair-category"></span></p>
+            <p><strong>Tags:</strong> <span id="chair-tags"></span></p>
+            <p>Posted by: <strong id="chair-author"></strong></p>
+
             <h3>Description</h3>
-            <div id="chair-description"></div>
-            
-            <div id="action-buttons"></div>
+            <p id="chair-description"></p>
+
+            <div id="action-buttons" style="margin-top:1rem;"></div>
         </div>
-        
-        <div id="error-container" style="display: none;">
-            Chair not found. Please return to the Home Feed.
+
+        <div id="error-container" style="display:none;">
+            <p>Chair not found. <a href="home.html">Return to the feed</a>.</p>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. URL Parsing: Extract the 'id' parameter from the URL query string (?id=XXX)
+        document.addEventListener("DOMContentLoaded", async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const chairId = urlParams.get('id');
 
-            if (!chairId) {
+            if (!chairId) { showError(); return; }
+
+            let chair = null;
+            try {
+                const res = await fetch('/api/chairs');
+                if (!res.ok) throw new Error('Failed to fetch chairs');
+                const chairs = await res.json();
+                chair = chairs.find(c => String(c.id) === String(chairId));
+            } catch (err) {
+                console.error(err);
                 showError();
                 return;
             }
 
-            // 2. Fetch application data states from localStorage
-            const chairs = JSON.parse(localStorage.getItem('chairs')) || [];
+            if (!chair) { showError(); return; }
+
+            // Populate the page
+            const img = document.getElementById('chair-image');
+            if (chair.image) { img.src = chair.image; img.alt = chair.name; img.style.display = 'block'; }
+
+            document.getElementById('chair-name').textContent = chair.name;
+            document.getElementById('chair-brand').textContent = chair.brand || '—';
+            document.getElementById('chair-category').textContent = chair.categoryId || 'Uncategorized';
+            document.getElementById('chair-tags').textContent = (chair.tags || []).join(', ') || 'None';
+            document.getElementById('chair-description').textContent = chair.description || '';
+
+            // Look up the author's username
             const users = JSON.parse(localStorage.getItem('users')) || [];
+            const author = users.find(u => String(u.id) === String(chair.userId));
+            document.getElementById('chair-author').textContent = author ? author.username : 'Unknown';
 
-            // 3. Locate the specific chair matching the parsed ID
-            const activeChair = chairs.find(c => String(c.id) === String(chairId));
-
-            if (!activeChair) {
-                showError();
-                return;
-            }
-
-            // 4. Cross-Referencing: Find the creator's user data using chair's userId
-            const authorUser = users.find(u => String(u.id) === String(activeChair.userId));
-            const authorUsername = authorUser ? authorUser.username : "Unknown User";
-
-            // 5. DOM Injection: Populate layout elements with retrieved data
-            document.getElementById('chair-name').textContent = activeChair.name;
-            document.getElementById('chair-description').textContent = activeChair.description;
-            document.getElementById('chair-author').textContent = authorUsername;
-
-            // 6. Check if the currently logged-in user is the author
-            // Make sure 'currentUser' matches the key you used when creating your login feature!
+            // Show Edit button if current user is the author
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-            // If a user is logged in, and their ID matches the chair's creator ID...
-            if (currentUser && String(currentUser.id) === String(activeChair.userId)) {
-                // ...find the action buttons div and put an edit button inside it!
-                const actionButtons = document.getElementById('action-buttons');
-                actionButtons.innerHTML = `<a href="editpost.html?id=${chairId}"><button>Edit Chair</button></a>`;
+            if (currentUser && String(currentUser.id) === String(chair.userId)) {
+                document.getElementById('action-buttons').innerHTML =
+                    `<a href="editpost.html?id=${chairId}"><button>Edit Chair</button></a>`;
             }
         });
 

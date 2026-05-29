@@ -46,7 +46,10 @@ async function handleAddChair(event) {
         categoryId: document.getElementById('chairCategory').value,
         description: document.getElementById('chairDescription').value,
         userId: activeUser ? (activeUser.id || activeUser.userId) : 'guest',
-        tags: ['user-sub']
+        tags: document.getElementById('chairTags').value
+            .split(',')
+            .map(t => t.trim().toLowerCase())
+            .filter(t => t.length > 0)
     };
 
     try {

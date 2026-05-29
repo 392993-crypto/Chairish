@@ -44,7 +44,6 @@ function renderChairCards(chairs) {
             <h3>${chair.name}</h3>
             <p><strong>Brand:</strong> ${chair.brand}</p>
             <p><strong>Category:</strong> ${chair.categoryId || 'Uncategorized'}</p>
-            <p>${chair.description || ''}</p>
             <p><strong>Tags:</strong> ${tagsDisplay || 'None'}</p>
             <button onclick="likeChair('${chair.id}')" style="margin-bottom:10px;cursor:pointer;">👍 Like This Style</button>
             <br>

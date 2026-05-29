@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "chair_1780012858075",
+    "name": "cool cat chair",
+    "brand": "idk",
+    "image": "https://files.catbox.moe/62mf9g.jpg",
+    "categoryId": "cat_02",
+    "description": "its in my room",
+    "userId": "admin_02",
+    "tags": [
+      "user-sub"
+    ]
+  }
+]
