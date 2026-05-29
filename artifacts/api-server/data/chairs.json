@@ -11,83 +11,23 @@
   },
   {
     "id": "chair_mock_001",
-    "name": "Herman Miller Aeron",
-    "brand": "Herman Miller",
-    "image": "https://images.unsplash.com/photo-1589363460779-cd717d0f8f18?w=600&fit=crop",
+    "name": "really cool chair i found",
+    "brand": "uh. three",
+    "image": "https://files.catbox.moe/cil0io.jpg",
     "categoryId": "cat_01",
-    "description": "The gold standard of ergonomic office chairs. The Aeron's PostureFit SL system supports both the sacrum and ilium, keeping your spine in its natural forward tilt. Mesh back provides all-day breathability and the fully adjustable arms make it adaptable to nearly any desk setup. An absolute workhorse for long coding sessions.",
-    "userId": "user_04",
-    "tags": ["ergonomic", "mesh", "lumbar", "adjustable", "office", "premium"]
+    "description": "it has three legs.. where is the fourth im scared......",
+    "userId": "desk_warrior",
+    "tags": ["premium"]
   },
   {
     "id": "chair_mock_002",
-    "name": "Secretlab Titan Evo",
-    "brand": "Secretlab",
-    "image": "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&fit=crop",
+    "name": "the seat of luxury",
+    "brand": "some god somewhere i think",
+    "image": "https://files.catbox.moe/jg2x5b.webp",
     "categoryId": "cat_01",
-    "description": "Built like a racing seat and engineered for marathon gaming sessions. The magnetic memory foam head pillow is genuinely incredible, and the integrated lumbar system is one of the best I've tried. Cold-cure foam keeps it from flattening over time. Heavy and solid — this thing isn't going anywhere.",
+    "description": "Cozy....whoa............comfy.....",
     "userId": "user_02",
-    "tags": ["gaming", "ergonomic", "leather", "lumbar", "premium", "adjustable"]
-  },
-  {
-    "id": "chair_mock_003",
-    "name": "IKEA POÄNG",
-    "brand": "IKEA",
-    "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&fit=crop",
-    "categoryId": "cat_02",
-    "description": "The people's lounge chair. The bent birch frame gives just enough flex to feel like it's breathing with you. Pair it with the footstool and you've basically built yourself a napping station. I've had mine for 6 years and it still looks and feels brand new. Timeless Swedish design at a price that doesn't require a second mortgage.",
-    "userId": "user_03",
-    "tags": ["lounge", "scandinavian", "fabric", "affordable", "casual", "cozy"]
-  },
-  {
-    "id": "chair_mock_004",
-    "name": "Eames Lounge Chair",
-    "brand": "Herman Miller",
-    "image": "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&fit=crop",
-    "categoryId": "cat_02",
-    "description": "The Eames Lounge is less a chair and more a lifestyle decision. Molded plywood shells, genuine leather cushions, and a swivel base that feels like it cost a thousand dollars — because it did. Sinking into one of these after a long day is a spiritual experience. Not ergonomic in the clinical sense, but your soul feels supported.",
-    "userId": "user_01",
-    "tags": ["lounge", "luxury", "leather", "iconic", "mid-century", "premium"]
-  },
-  {
-    "id": "chair_mock_005",
-    "name": "Steelcase Leap V2",
-    "brand": "Steelcase",
-    "image": "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=600&fit=crop",
-    "categoryId": "cat_01",
-    "description": "The Leap moves with you rather than forcing you into a fixed posture — which sounds like marketing speak until you actually sit in one. The lower back firmness control is a revelation. The LiveBack technology mimics your spine's movement as you shift and recline. Criminally underrated compared to the Aeron despite being just as good.",
-    "userId": "user_06",
-    "tags": ["ergonomic", "office", "adjustable", "lumbar", "premium", "mesh"]
-  },
-  {
-    "id": "chair_mock_006",
-    "name": "Papasan Bowl Chair",
-    "brand": "World Market",
-    "image": "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&fit=crop",
-    "categoryId": "cat_04",
-    "description": "A giant fabric nest for humans. The round cushion is deeply satisfying and there are approximately 47 valid sitting positions available to you at any given time. Zero ergonomic value. Maximum cozy value. The rattan frame creaks pleasantly when you shift, like a tiny wooden lullaby. My cat has claimed 60% of it.",
-    "userId": "user_05",
-    "tags": ["accent", "cozy", "fabric", "bohemian", "quirky", "lounge"]
-  },
-  {
-    "id": "chair_mock_007",
-    "name": "Tolix Marais A Chair",
-    "brand": "Tolix",
-    "image": "https://images.unsplash.com/photo-1503602642458-232111445657?w=600&fit=crop",
-    "categoryId": "cat_03",
-    "description": "The classic French industrial dining chair. Perforated steel sheet body, powder-coated in dozens of colors, stackable up to 8 high. You see these in every hip café and restaurant for a reason — they're indestructible, they're beautiful, and they age with character. Mine have been through three apartments and look better every year.",
-    "userId": "user_04",
-    "tags": ["dining", "industrial", "metal", "minimalist", "stackable", "durable"]
-  },
-  {
-    "id": "chair_mock_008",
-    "name": "HAY About A Chair AAC22",
-    "brand": "HAY",
-    "image": "https://images.unsplash.com/photo-1561677978-583a8c7a4b43?w=600&fit=crop",
-    "categoryId": "cat_04",
-    "description": "Danish design at its most effortlessly confident. Polypropylene shell, solid oak legs, available in a genuinely beautiful range of muted tones. Light enough to move with one finger, sturdy enough to feel substantial. Works as a dining chair, desk chair, or bedroom accent. The kind of chair you buy and stop thinking about — in the best possible way.",
-    "userId": "user_03",
-    "tags": ["accent", "scandinavian", "minimalist", "danish", "dining", "lightweight"]
+    "tags": ["gaming", "adjustable"]
   },
   {
     "id": "chair_silly_001",
@@ -173,11 +113,11 @@
     "id": "chair_silly_009",
     "name": "the chair i described as 'fine' for three years before realizing it was destroying my back",
     "brand": "Generic Office Supply Co.",
-    "image": "https://images.unsplash.com/photo-1512916194211-3f2b7f5f7f3a?w=600&fit=crop",
+    "image": "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=600&fit=crop",
     "categoryId": "cat_01",
     "description": "This was my desk chair for three years. I described it as 'fine.' It had a lumbar bump that hit exactly the wrong spot on my spine. I thought the back pain was just a personality trait I had developed. I replaced this chair with an Aeron and my back pain disappeared in a week. I am posting this as a warning. If your chair is 'fine,' it is not fine. You deserve better. We all do.",
     "userId": "user_06",
-    "tags": ["ergonomic", "office", "cautionary tale", "upgrade", "budget"]
+    "tags": ["ergonomic", "office", "cautionary-tale", "upgrade", "budget"]
   },
   {
     "id": "chair_silly_010",
