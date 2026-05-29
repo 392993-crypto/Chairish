@@ -194,7 +194,10 @@
             const section = document.getElementById('similar-chairs-section');
 
             const others = allChairs.filter(c => String(c.id) !== String(current.id));
-            if (others.length === 0) { section.style.display = 'none'; return; }
+            if (others.length === 0) {
+                grid.innerHTML = '<p style="color:#aaa; font-size:0.9rem; font-style:italic;">No other chairs posted yet — be the first to <a href="create.html">add one</a>!</p>';
+                return;
+            }
 
             grid.innerHTML = '<p style="color:#888; font-size:0.9rem;">Finding similar chairs…</p>';
 
@@ -207,7 +210,7 @@
                 const { recommendations } = await res.json();
 
                 if (!recommendations || recommendations.length === 0) {
-                    section.style.display = 'none';
+                    grid.innerHTML = '<p style="color:#aaa; font-size:0.9rem; font-style:italic;">No close matches found in the current feed.</p>';
                     return;
                 }
 
@@ -239,7 +242,7 @@
                         </a>`;
                 }).join('');
             } catch {
-                section.style.display = 'none';
+                grid.innerHTML = '<p style="color:#aaa; font-size:0.9rem; font-style:italic;">Could not load recommendations right now.</p>';
             }
         }
 
